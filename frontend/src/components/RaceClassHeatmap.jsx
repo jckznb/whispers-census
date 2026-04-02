@@ -46,7 +46,7 @@ export function RaceClassHeatmap({ data }) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="text-xs border-collapse w-full min-w-max">
+      <table className="text-xs border-collapse min-w-max">
         <thead>
           <tr>
             <th className="text-void-500 font-normal text-left pb-2 pr-3 w-28">Race ↓ / Class →</th>

@@ -157,8 +157,9 @@ export const VALID_COMBOS = new Set([
   'Earthen|Warlock', 'Earthen|Warrior',
 ])
 
+// Ordered by in-game release date (Vanilla → WotLK → MoP → Legion → Dragonflight)
 export const CLASS_ORDER = [
-  'Death Knight', 'Demon Hunter', 'Druid', 'Evoker',
-  'Hunter', 'Mage', 'Monk', 'Paladin',
-  'Priest', 'Rogue', 'Shaman', 'Warlock', 'Warrior',
+  'Warrior', 'Paladin', 'Hunter', 'Rogue', 'Priest',
+  'Shaman', 'Mage', 'Warlock', 'Druid',
+  'Death Knight', 'Monk', 'Demon Hunter', 'Evoker',
 ]

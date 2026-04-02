@@ -5,7 +5,7 @@ import { CLASS_COLORS, FACTION_COLORS, ROLE_COLORS } from '../utils/constants'
  * Horizontal sorted bar chart for demographic data.
  * groupBy: 'class' | 'race' | 'spec'
  */
-export function PopularityBars({ data, groupBy = 'class', limit = 20 }) {
+export function PopularityBars({ data, groupBy = 'class', limit = 26 }) {
   const groups = useMemo(() => {
     if (!data?.length) return []
 
@@ -96,7 +96,7 @@ export function PopularityBars({ data, groupBy = 'class', limit = 20 }) {
 
           {/* Percentage */}
           <span className="text-void-300 text-xs w-12 text-right shrink-0 tabular-nums">
-            {g.pct.toFixed(1)}%
+            {g.pct.toFixed(2)}%
           </span>
         </div>
       ))}
