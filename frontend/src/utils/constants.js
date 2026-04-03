@@ -63,9 +63,8 @@ export const CONTEXTS = [
 // This list covers all retail combos as of The War Within
 export const VALID_COMBOS = new Set([
   // Human
-  'Human|Death Knight', 'Human|Demon Hunter', 'Human|Druid', 'Human|Evoker',
-  'Human|Hunter', 'Human|Mage', 'Human|Monk', 'Human|Paladin', 'Human|Priest',
-  'Human|Rogue', 'Human|Warlock', 'Human|Warrior',
+  'Human|Death Knight', 'Human|Hunter', 'Human|Mage', 'Human|Monk',
+  'Human|Paladin', 'Human|Priest', 'Human|Rogue', 'Human|Warlock', 'Human|Warrior',
   // Dwarf
   'Dwarf|Death Knight', 'Dwarf|Hunter', 'Dwarf|Mage', 'Dwarf|Monk',
   'Dwarf|Paladin', 'Dwarf|Priest', 'Dwarf|Rogue', 'Dwarf|Shaman',

@@ -78,8 +78,8 @@ export function RaceClassHeatmap({ data }) {
                     fontSize: '0.7rem',
                     fontWeight: 500,
                     color: 'inherit',
-                    transformOrigin: 'center bottom',
-                    transform: 'translateX(-50%) rotate(-35deg)',
+                    transformOrigin: 'left bottom',
+                    transform: 'rotate(-35deg)',
                   }}
                 >
                   {race}
