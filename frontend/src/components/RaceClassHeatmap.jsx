@@ -49,25 +49,28 @@ export function RaceClassHeatmap({ data }) {
       <table className="text-xs border-collapse min-w-max">
         <thead>
           <tr>
-            <th className="text-void-500 font-normal text-left pb-2 pr-3 w-28">Race ↓ / Class →</th>
-            {classes.map(cls => (
+            <th className="text-void-500 font-normal text-left pb-2 pr-3 w-28">Class ↓ / Race →</th>
+            {races.map(race => (
               <th
-                key={cls}
-                className="pb-2 px-1 font-medium text-center"
-                style={{ color: CLASS_COLORS[cls] || '#9ca3af', writingMode: 'vertical-rl', minWidth: 28 }}
+                key={race}
+                className="pb-2 px-1 font-medium text-center text-void-300"
+                style={{ writingMode: 'vertical-rl', minWidth: 28 }}
               >
-                {cls}
+                {race}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {races.map(race => (
-            <tr key={race} className="group">
-              <td className="pr-3 py-0.5 text-void-300 whitespace-nowrap font-medium group-hover:text-void-100 transition-colors">
-                {race}
+          {classes.map(cls => (
+            <tr key={cls} className="group">
+              <td
+                className="pr-3 py-0.5 whitespace-nowrap font-medium group-hover:brightness-125 transition-all"
+                style={{ color: CLASS_COLORS[cls] || '#9ca3af' }}
+              >
+                {cls}
               </td>
-              {classes.map(cls => {
+              {races.map(race => {
                 const comboKey = `${race}|${cls}`
                 const count = grid[comboKey] || 0
                 const valid = VALID_COMBOS.has(comboKey)
@@ -76,7 +79,7 @@ export function RaceClassHeatmap({ data }) {
                 const classColor = CLASS_COLORS[cls] || '#6b7280'
 
                 return (
-                  <td key={cls} className="p-0.5">
+                  <td key={race} className="p-0.5">
                     {valid ? (
                       <button
                         onClick={() => setSelected(isSelected ? null : comboKey)}
