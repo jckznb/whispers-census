@@ -54,7 +54,7 @@ export const BRACKET_LABELS = {
 // Contexts served by the demographics blob
 export const CONTEXTS = [
   { id: 'pvp',     label: 'All PvP',        phase: 1 },
-  { id: 'pve',     label: 'Mythic+',         phase: 2 },
+  { id: 'pve',     label: 'Mythic+',         phase: 1 },
   { id: 'general', label: 'All Characters',  phase: 3 },
 ]
 
