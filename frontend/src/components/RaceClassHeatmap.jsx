@@ -25,7 +25,13 @@ export function RaceClassHeatmap({ data }) {
       counts.set(key, (counts.get(key) || 0) + row.count)
     }
 
-    const raceList = [...raceSet].sort()
+    // Sort races by total popularity descending
+    const raceTotals = new Map()
+    for (const [key, count] of counts) {
+      const race = key.split('|')[0]
+      raceTotals.set(race, (raceTotals.get(race) || 0) + count)
+    }
+    const raceList = [...raceSet].sort((a, b) => (raceTotals.get(b) || 0) - (raceTotals.get(a) || 0))
     const maxCount = Math.max(1, ...counts.values())
 
     return {
@@ -49,14 +55,35 @@ export function RaceClassHeatmap({ data }) {
       <table className="text-xs border-collapse min-w-max">
         <thead>
           <tr>
-            <th className="text-void-500 font-normal text-left pb-2 pr-3 w-28">Class ↓ / Race →</th>
+            <th className="text-void-500 font-normal text-left pr-3 w-28" style={{ verticalAlign: 'bottom', paddingBottom: 6 }}>Class ↓ / Race →</th>
             {races.map(race => (
               <th
                 key={race}
-                className="pb-2 px-1 font-medium text-center text-void-300"
-                style={{ writingMode: 'vertical-rl', minWidth: 28 }}
+                className="font-medium text-void-300"
+                style={{
+                  minWidth: 28,
+                  height: 96,
+                  padding: 0,
+                  verticalAlign: 'bottom',
+                  position: 'relative',
+                  overflow: 'visible',
+                }}
               >
-                {race}
+                <span
+                  style={{
+                    position: 'absolute',
+                    bottom: 6,
+                    left: '50%',
+                    whiteSpace: 'nowrap',
+                    fontSize: '0.7rem',
+                    fontWeight: 500,
+                    color: 'inherit',
+                    transformOrigin: 'center bottom',
+                    transform: 'translateX(-50%) rotate(-35deg)',
+                  }}
+                >
+                  {race}
+                </span>
               </th>
             ))}
           </tr>
