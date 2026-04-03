@@ -42,13 +42,16 @@ export default function App() {
       {/* Header */}
       <header className="border-b border-void-700/40 bg-void-900/80 backdrop-blur-md sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <div>
-            <h1 className="font-display text-xl font-semibold text-void-50 glow-eye tracking-wider">
-              Whispers Census
-            </h1>
-            <p className="text-void-500 text-xs hidden sm:block">
-              The whispers reveal what Azeroth is playing
-            </p>
+          <div className="flex items-center gap-3">
+            <img src="/logo.png" alt="Whispers Census logo" className="w-9 h-9 rounded-sm shrink-0" />
+            <div>
+              <h1 className="font-display text-xl font-semibold text-void-50 glow-eye tracking-wider">
+                Whispers Census
+              </h1>
+              <p className="text-void-500 text-xs hidden sm:block">
+                The whispers reveal what Azeroth is playing
+              </p>
+            </div>
           </div>
           {snapshotDate && (
             <span className="text-void-500 text-xs shrink-0">
