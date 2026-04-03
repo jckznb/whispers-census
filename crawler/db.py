@@ -7,6 +7,7 @@ logger = logging.getLogger(__name__)
 
 _BATCH_SIZE = 1000
 _REST_BASE = f'{SUPABASE_URL}/rest/v1'
+_TIMEOUT = 120  # seconds — large batch inserts can be slow
 
 
 def _headers(prefer: str = 'return=minimal') -> dict:
@@ -28,7 +29,7 @@ def upsert(table: str, rows: list[dict], on_conflict: str = None) -> None:
     headers = _headers('resolution=merge-duplicates,return=minimal')
     for i in range(0, len(rows), _BATCH_SIZE):
         chunk = rows[i:i + _BATCH_SIZE]
-        r = httpx.post(f'{_REST_BASE}/{table}', json=chunk, headers=headers, params=params)
+        r = httpx.post(f'{_REST_BASE}/{table}', json=chunk, headers=headers, params=params, timeout=_TIMEOUT)
         if not r.is_success:
             logger.error(f'Upsert {table} batch {i}–{i+len(chunk)} failed {r.status_code}: {r.text[:500]}')
         r.raise_for_status()
@@ -59,7 +60,7 @@ def select(table: str, filters: dict = None, columns: str = '*') -> list[dict]:
     page_size = 1000
     while True:
         page_params = {**params, 'limit': page_size, 'offset': offset}
-        r = httpx.get(f'{_REST_BASE}/{table}', params=page_params, headers=_headers())
+        r = httpx.get(f'{_REST_BASE}/{table}', params=page_params, headers=_headers(), timeout=_TIMEOUT)
         r.raise_for_status()
         page = r.json()
         results.extend(page)
@@ -69,8 +70,23 @@ def select(table: str, filters: dict = None, columns: str = '*') -> list[dict]:
     return results
 
 
+def delete(table: str, filters: dict) -> None:
+    """Delete rows matching filters. Supports eq (scalar) and in (list) per key."""
+    if not filters:
+        raise ValueError('delete() requires at least one filter')
+    params = {}
+    for key, value in filters.items():
+        if isinstance(value, list):
+            params[key] = f'in.({",".join(str(v) for v in value)})'
+        else:
+            params[key] = f'eq.{value}'
+    r = httpx.delete(f'{_REST_BASE}/{table}', params=params, headers=_headers(), timeout=_TIMEOUT)
+    r.raise_for_status()
+    logger.debug(f'Deleted from {table} where {filters}')
+
+
 def rpc(function_name: str, params: dict = None) -> any:
     """Call a Postgres function via RPC."""
-    r = httpx.post(f'{_REST_BASE}/rpc/{function_name}', json=params or {}, headers=_headers())
+    r = httpx.post(f'{_REST_BASE}/rpc/{function_name}', json=params or {}, headers=_headers(), timeout=_TIMEOUT)
     r.raise_for_status()
     return r.json() if r.content else None

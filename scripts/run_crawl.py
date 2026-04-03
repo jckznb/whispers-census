@@ -49,7 +49,13 @@ def main() -> None:
 
     elif args.phase == 'mplus':
         from crawler.mythic_plus import crawl_mythic_plus
-        crawl_mythic_plus(region=args.region)
+        crawl_mythic_plus(region=args.region, snapshot_date=snapshot_date)
+        if not args.no_aggregate:
+            from crawler.aggregator import compute_mplus_snapshots
+            compute_mplus_snapshots(region=args.region, snapshot_date=snapshot_date)
+        if not args.no_export:
+            from crawler.exporter import export_demographics
+            export_demographics(snapshot_date=snapshot_date)
 
     elif args.phase == 'raid':
         from crawler.raid import crawl_raid

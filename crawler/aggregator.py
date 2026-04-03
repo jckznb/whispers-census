@@ -40,3 +40,21 @@ def compute_pvp_snapshots(
         logger.info(f'  Computed snapshot: {context}')
 
     logger.info('PvP snapshot computation complete')
+
+
+def compute_mplus_snapshots(
+    region: str = 'us',
+    snapshot_date: date = None,
+    min_keystone: int = 0,
+) -> None:
+    if snapshot_date is None:
+        snapshot_date = date.today()
+
+    logger.info(f'Computing M+ snapshots for date={snapshot_date} region={region} min_keystone={min_keystone}')
+
+    db.rpc('compute_mplus_demographics_snapshot', {
+        'p_snapshot_date': snapshot_date.isoformat(),
+        'p_region': region,
+        'p_min_keystone': min_keystone,
+    })
+    logger.info('M+ snapshot computation complete')
