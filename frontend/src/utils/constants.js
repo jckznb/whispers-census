@@ -58,6 +58,22 @@ export const CONTEXTS = [
   { id: 'general', label: 'All Characters',  phase: 3 },
 ]
 
+// Races that exist in both factions — displayed as "Race (A)" / "Race (H)" in the UI
+export const NEUTRAL_RACES = new Set(['Pandaren', 'Earthen', 'Dracthyr', 'Haranir'])
+
+/** Returns the display name for a race, appending faction suffix for neutral races. */
+export function getRaceDisplayName(baseName, faction) {
+  if (baseName && NEUTRAL_RACES.has(baseName) && faction) {
+    return `${baseName} (${faction === 'alliance' ? 'A' : 'H'})`
+  }
+  return baseName
+}
+
+/** Strips the faction suffix so VALID_COMBOS lookups always use the base race name. */
+export function getBaseRaceName(displayName) {
+  return displayName ? displayName.replace(/ \([AH]\)$/, '') : displayName
+}
+
 // Valid race/class combinations (0 = invalid, grayed out in heatmap)
 // Keyed as 'RaceName|ClassName'
 // This list covers all retail combos as of The War Within

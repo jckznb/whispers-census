@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { CLASS_COLORS, CLASS_ORDER, VALID_COMBOS } from '../utils/constants'
+import { CLASS_COLORS, CLASS_ORDER, VALID_COMBOS, getRaceDisplayName, getBaseRaceName } from '../utils/constants'
 
 /**
  * Race × Class heatmap grid.
@@ -17,9 +17,10 @@ export function RaceClassHeatmap({ data }) {
     const raceSet = new Set()
 
     for (const row of data) {
-      const race = row.races?.name
+      const baseName = row.races?.name
       const cls = row.classes?.name
-      if (!race || !cls) continue
+      if (!baseName || !cls) continue
+      const race = getRaceDisplayName(baseName, row.races?.faction)
       raceSet.add(race)
       const key = `${race}|${cls}`
       counts.set(key, (counts.get(key) || 0) + row.count)
@@ -100,7 +101,7 @@ export function RaceClassHeatmap({ data }) {
               {races.map(race => {
                 const comboKey = `${race}|${cls}`
                 const count = grid[comboKey] || 0
-                const valid = VALID_COMBOS.has(comboKey)
+                const valid = VALID_COMBOS.has(`${getBaseRaceName(race)}|${cls}`)
                 const isSelected = selected === comboKey
                 const intensity = valid && count > 0 ? Math.sqrt(count / maxCount) : 0
                 const classColor = CLASS_COLORS[cls] || '#6b7280'

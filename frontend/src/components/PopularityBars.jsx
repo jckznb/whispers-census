@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { CLASS_COLORS, FACTION_COLORS, ROLE_COLORS } from '../utils/constants'
+import { CLASS_COLORS, FACTION_COLORS, ROLE_COLORS, getRaceDisplayName } from '../utils/constants'
 
 /**
  * Horizontal sorted bar chart for demographic data.
@@ -24,8 +24,8 @@ export function PopularityBars({ data, groupBy = 'class', limit = 26 }) {
       } else if (groupBy === 'race') {
         const name = row.races?.name
         if (!name) continue
-        key = name
-        label = name
+        key = getRaceDisplayName(name, row.races?.faction)
+        label = key
         color = FACTION_COLORS[row.races?.faction] || '#6b7280'
         meta = row.races?.faction
       } else if (groupBy === 'spec') {

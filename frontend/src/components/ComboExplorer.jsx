@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { CLASS_COLORS, FACTION_COLORS } from '../utils/constants'
+import { CLASS_COLORS, FACTION_COLORS, VALID_COMBOS, getRaceDisplayName, getBaseRaceName } from '../utils/constants'
 
 /**
  * "Pick a race, see class breakdown" / "Pick a class, see race breakdown" explorer.
@@ -18,9 +18,14 @@ export function ComboExplorer({ data }) {
     const comboCounts = new Map()
 
     for (const row of data) {
-      const race = row.races?.name
+      const baseName = row.races?.name
       const cls = row.classes?.name
-      if (!race || !cls) continue
+      if (!baseName || !cls) continue
+
+      // Skip invalid race/class combinations entirely
+      if (!VALID_COMBOS.has(`${baseName}|${cls}`)) continue
+
+      const race = getRaceDisplayName(baseName, row.races?.faction)
 
       raceMap.set(race, {
         name: race,
