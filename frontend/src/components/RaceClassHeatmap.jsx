@@ -6,7 +6,7 @@ import { CLASS_COLORS, CLASS_ORDER, VALID_COMBOS, getRaceDisplayName, getBaseRac
  * Cell color intensity = relative popularity within the current context.
  * Click a cell to highlight that combo.
  */
-export function RaceClassHeatmap({ data }) {
+export function RaceClassHeatmap({ data, specCombos = [] }) {
   const [selected, setSelected] = useState(null)
 
   const { races, classes, grid, maxCount } = useMemo(() => {
@@ -136,16 +136,52 @@ export function RaceClassHeatmap({ data }) {
       {selected && (() => {
         const [race, cls] = selected.split('|')
         const count = grid[selected] || 0
+        const baseRace = getBaseRaceName(race)
+
+        // Spec breakdown for this race+class combo
+        const cellSpecs = specCombos
+          .filter(s => s.races?.name === baseRace && s.classes?.name === cls)
+          .sort((a, b) => b.count - a.count)
+        const specTotal = cellSpecs.reduce((s, r) => s + r.count, 0)
+
         return (
           <div className="mt-3 p-3 rounded-lg bg-void-800/60 border border-void-600/30 text-sm">
-            <span style={{ color: CLASS_COLORS[cls] }} className="font-semibold">{race} {cls}</span>
-            <span className="text-void-300 ml-2">{count.toLocaleString()} characters</span>
-            <button
-              onClick={() => setSelected(null)}
-              className="ml-3 text-void-500 hover:text-void-300 text-xs"
-            >
-              ✕ clear
-            </button>
+            <div className="flex items-center gap-2 mb-2">
+              <span style={{ color: CLASS_COLORS[cls] }} className="font-semibold">{race} {cls}</span>
+              <span className="text-void-400">{count.toLocaleString()} characters</span>
+              <button
+                onClick={() => setSelected(null)}
+                className="ml-auto text-void-500 hover:text-void-300 text-xs"
+              >
+                ✕
+              </button>
+            </div>
+
+            {cellSpecs.length > 0 && (
+              <div className="space-y-1.5 mt-2 border-t border-void-700/40 pt-2">
+                {cellSpecs.map(s => {
+                  const pct = specTotal > 0 ? (s.count / specTotal) * 100 : 0
+                  return (
+                    <div key={s.specs?.name} className="flex items-center gap-2">
+                      <span className="text-xs text-void-300 w-28 shrink-0">{s.specs?.name}</span>
+                      <div className="flex-1 bg-void-700/40 rounded-full h-1.5 overflow-hidden">
+                        <div
+                          className="h-full rounded-full"
+                          style={{
+                            width: `${pct}%`,
+                            backgroundColor: CLASS_COLORS[cls] || '#6b7280',
+                            opacity: 0.8,
+                          }}
+                        />
+                      </div>
+                      <span className="text-xs text-void-400 w-10 text-right tabular-nums">
+                        {pct.toFixed(1)}%
+                      </span>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
           </div>
         )
       })()}

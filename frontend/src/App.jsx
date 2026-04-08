@@ -35,7 +35,7 @@ export default function App() {
   const [context, setContext] = useState('pvp')
   const [barsView, setBarsView] = useState('class')
 
-  const { data, loading, error, snapshotDate } = useDemographics(context)
+  const { data, specData, specCombos, loading, error, snapshotDate } = useDemographics(context)
 
   return (
     <div className="min-h-screen">
@@ -92,7 +92,7 @@ export default function App() {
               <p className="text-void-500 text-xs mb-4">
                 Color intensity = relative popularity. Click a cell for details. Gray = invalid combo.
               </p>
-              <RaceClassHeatmap data={data} />
+              <RaceClassHeatmap data={data} specCombos={specCombos} />
             </Section>
 
             {/* Popularity bars */}
@@ -101,21 +101,28 @@ export default function App() {
                 {[
                   { value: 'class', label: 'By Class' },
                   { value: 'race',  label: 'By Race' },
+                  { value: 'spec',  label: 'By Spec', disabled: specData.length === 0 },
                 ].map(opt => (
                   <button
                     key={opt.value}
-                    onClick={() => setBarsView(opt.value)}
+                    onClick={() => !opt.disabled && setBarsView(opt.value)}
+                    disabled={opt.disabled}
                     className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
                       barsView === opt.value
                         ? 'bg-void-600/60 text-void-100'
-                        : 'text-void-500 hover:text-void-300'
+                        : opt.disabled
+                          ? 'text-void-600 cursor-not-allowed'
+                          : 'text-void-500 hover:text-void-300'
                     }`}
                   >
                     {opt.label}
                   </button>
                 ))}
               </div>
-              <PopularityBars data={data} groupBy={barsView} />
+              <PopularityBars
+                data={barsView === 'spec' ? specData : data}
+                groupBy={barsView}
+              />
             </Section>
 
             {/* Combo explorer */}

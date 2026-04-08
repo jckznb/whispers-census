@@ -1,15 +1,20 @@
 """
 Build and upload the demographics JSON blob to Vercel Blob storage.
 
-The blob is a single small file (~5-10KB) served by Vercel's CDN.
+The blob is a single file served by Vercel's CDN.
 The frontend fetches it once per page load — no Supabase connections needed.
 
 JSON shape:
 {
-  "updated": "2026-03-31",
-  "pvp":     { "total": 45230, "combos": [{"race":..., "faction":..., "class":..., "count":..., "pct":...}, ...] },
-  "pve":     null,   # null until Phase 2
-  "general": null    # null until Phase 3
+  "updated": "2026-04-08",
+  "pvp": {
+    "total": 151717,
+    "combos":      [{"race","faction","class","count","pct"}, ...],
+    "specs":       [{"class","spec","role","count","pct"}, ...],
+    "spec_combos": [{"race","faction","class","spec","count","pct"}, ...]
+  },
+  "pve": { ... },
+  "general": null
 }
 """
 import json
@@ -32,40 +37,66 @@ CONTEXT_MAP = {
 }
 
 
-def _load_lookups() -> tuple[dict, dict]:
-    """Fetch races and classes from Supabase, return id→data dicts."""
-    races = {r['id']: r for r in db.select('races', columns='id,name,faction')}
+def _load_lookups() -> tuple[dict, dict, dict]:
+    """Fetch races, classes, and specs from Supabase, return id→data dicts."""
+    races   = {r['id']: r for r in db.select('races',   columns='id,name,faction')}
     classes = {c['id']: c for c in db.select('classes', columns='id,name')}
-    return races, classes
+    specs   = {s['id']: s for s in db.select('specs',   columns='id,name,class_id,role')}
+    return races, classes, specs
 
 
-def _build_context(db_context: str, races: dict, classes: dict) -> dict | None:
+def _build_all_for_context(
+    db_context: str,
+    races: dict,
+    classes: dict,
+    specs: dict,
+) -> dict | None:
     """
-    Query demographics_snapshot for db_context, collapse to race+class,
-    return {"total": N, "combos": [...]} or None if no data.
+    Single pass over demographics_snapshot for db_context.
+    Returns {"total", "combos", "specs", "spec_combos"} or None if no data.
     """
     rows = db.select('demographics_snapshot', filters={'context': db_context})
     if not rows:
         return None
 
-    # Find the latest snapshot date
+    # Use the latest snapshot date only
     latest = max(r['snapshot_date'] for r in rows)
     rows = [r for r in rows if r['snapshot_date'] == latest]
 
-    # Sum counts across specs/genders for each race+class pair
-    combo_counts: dict[tuple, int] = {}
-    for row in rows:
-        key = (row['race_id'], row['class_id'])
-        combo_counts[key] = combo_counts.get(key, 0) + row['count']
+    combo_counts:    dict[tuple, int] = {}  # (race_id, class_id)
+    spec_counts:     dict[tuple, int] = {}  # (class_id, spec_id)
+    sc_counts:       dict[tuple, int] = {}  # (race_id, class_id, spec_id)
 
-    total = sum(combo_counts.values())
-    if total == 0:
+    for row in rows:
+        race_id  = row['race_id']
+        class_id = row['class_id']
+        spec_id  = row['spec_id']
+        count    = row['count']
+
+        # race+class (always)
+        key = (race_id, class_id)
+        combo_counts[key] = combo_counts.get(key, 0) + count
+
+        # spec-level aggregations (only when spec_id is known)
+        if spec_id is not None:
+            sk = (class_id, spec_id)
+            spec_counts[sk] = spec_counts.get(sk, 0) + count
+
+            sck = (race_id, class_id, spec_id)
+            sc_counts[sck] = sc_counts.get(sck, 0) + count
+
+    combo_total = sum(combo_counts.values())
+    if combo_total == 0:
         return None
 
+    spec_total = sum(spec_counts.values())
+    sc_total   = sum(sc_counts.values())
+
+    # Build combos
     combos = []
     for (race_id, class_id), count in sorted(combo_counts.items(), key=lambda x: -x[1]):
         race = races.get(race_id)
-        cls = classes.get(class_id)
+        cls  = classes.get(class_id)
         if not race or not cls:
             continue
         combos.append({
@@ -73,16 +104,58 @@ def _build_context(db_context: str, races: dict, classes: dict) -> dict | None:
             'faction': race['faction'],
             'class':   cls['name'],
             'count':   count,
-            'pct':     round(count * 100.0 / total, 2),
+            'pct':     round(count * 100.0 / combo_total, 2),
         })
 
-    return {'total': total, 'combos': combos}
+    # Build specs (class+spec popularity)
+    specs_list = []
+    if spec_total > 0:
+        for (class_id, spec_id), count in sorted(spec_counts.items(), key=lambda x: -x[1]):
+            cls  = classes.get(class_id)
+            spec = specs.get(spec_id)
+            if not cls or not spec:
+                continue
+            specs_list.append({
+                'class': cls['name'],
+                'spec':  spec['name'],
+                'role':  spec['role'],
+                'count': count,
+                'pct':   round(count * 100.0 / spec_total, 2),
+            })
+
+    # Build spec_combos (race+class+spec, for heatmap drill-down)
+    spec_combos = []
+    if sc_total > 0:
+        for (race_id, class_id, spec_id), count in sorted(sc_counts.items(), key=lambda x: -x[1]):
+            race = races.get(race_id)
+            cls  = classes.get(class_id)
+            spec = specs.get(spec_id)
+            if not race or not cls or not spec:
+                continue
+            spec_combos.append({
+                'race':    race['name'],
+                'faction': race['faction'],
+                'class':   cls['name'],
+                'spec':    spec['name'],
+                'count':   count,
+                'pct':     round(count * 100.0 / sc_total, 2),
+            })
+
+    result = {
+        'total':  combo_total,
+        'combos': combos,
+    }
+    if specs_list:
+        result['specs'] = specs_list
+    if spec_combos:
+        result['spec_combos'] = spec_combos
+
+    return result
 
 
 def export_demographics(snapshot_date: date = None) -> str | None:
     """
     Build and upload the demographics JSON. Returns the blob URL, or None on failure.
-    Logs a warning and skips upload if BLOB_READ_WRITE_TOKEN is not configured.
     """
     if not BLOB_READ_WRITE_TOKEN:
         logger.warning('BLOB_READ_WRITE_TOKEN not set — skipping export')
@@ -92,14 +165,22 @@ def export_demographics(snapshot_date: date = None) -> str | None:
         snapshot_date = date.today()
 
     logger.info('Building demographics export...')
-    races, classes = _load_lookups()
+    races, classes, specs = _load_lookups()
 
     payload = {'updated': snapshot_date.isoformat()}
     for blob_key, db_context in CONTEXT_MAP.items():
-        payload[blob_key] = _build_context(db_context, races, classes)
+        payload[blob_key] = _build_all_for_context(db_context, races, classes, specs)
         ctx_data = payload[blob_key]
-        status = 'no data' if ctx_data is None else f"{ctx_data['total']:,} total characters"
-        logger.info(f'  {blob_key}: {status}')
+        if ctx_data is None:
+            logger.info(f'  {blob_key}: no data')
+        else:
+            n_specs = len(ctx_data.get('specs', []))
+            n_sc    = len(ctx_data.get('spec_combos', []))
+            logger.info(
+                f"  {blob_key}: {ctx_data['total']:,} characters, "
+                f"{len(ctx_data['combos'])} combos, "
+                f"{n_specs} spec rows, {n_sc} spec_combo rows"
+            )
 
     json_bytes = json.dumps(payload, separators=(',', ':')).encode()
     logger.info(f'Uploading {len(json_bytes):,} bytes to Vercel Blob...')

@@ -53,9 +53,30 @@ export const BRACKET_LABELS = {
 
 // Contexts served by the demographics blob
 export const CONTEXTS = [
-  { id: 'pvp',     label: 'All PvP',        phase: 1 },
-  { id: 'pve',     label: 'Mythic+',         phase: 1 },
-  { id: 'general', label: 'All Characters',  phase: 3 },
+  {
+    id: 'pvp',
+    label: 'All PvP',
+    phase: 1,
+    summary: 'Characters from the US Rated PvP leaderboards — 2v2 arena, 3v3 arena, Rated Battlegrounds, and Solo Shuffle. Snapshot from Season 41.',
+    detail: 'This dataset includes every character that appeared on a rated PvP leaderboard during Season 41. Characters are deduplicated across brackets, so a player who competes in both 2v2 and 3v3 is counted once. ~151,700 unique characters. This reflects active PvP players, not the general playerbase — expect the meta picks and specialized specs to be overrepresented.',
+    caveat: 'US region only. Leaderboard data skews toward players who push rating, not casual PvP.',
+  },
+  {
+    id: 'pve',
+    label: 'Mythic+',
+    phase: 1,
+    summary: 'Characters from US Mythic Keystone dungeon leaderboards. Covers the top runs across all dungeons and connected realms.',
+    detail: 'This dataset is built from the Mythic+ leaderboard — the highest-scoring timed keystone runs per dungeon per realm. Each run has 5 characters; all members are recorded. Characters are deduplicated across runs and dungeons. ~198,400 unique characters. This reflects active M+ pushers, particularly those who have completed high-level keys.',
+    caveat: 'US region only. Covers leaderboard-ranked runs only — casual M+ players who never appear on a leaderboard are not included.',
+  },
+  {
+    id: 'general',
+    label: 'General Population',
+    phase: 3,
+    summary: 'A broad sample of the WoW playerbase, not limited to any one activity. Coming in a future update.',
+    detail: 'This phase will crawl guild rosters across all US realms to build a representative sample of the overall player population — including players who do not engage with rated PvP or high-end Mythic+.',
+    caveat: null,
+  },
 ]
 
 // Races that exist in both factions — displayed as "Race (A)" / "Race (H)" in the UI
