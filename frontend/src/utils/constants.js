@@ -37,6 +37,12 @@ export const FACTION_COLORS = {
   neutral:  '#6b7280',
 }
 
+export const PROFESSION_TYPE_COLORS = {
+  crafting:  '#f59e0b',   // amber — making things
+  gathering: '#22c55e',   // green — out in the world
+  secondary: '#6b7280',   // gray  — cooking / fishing / archaeology
+}
+
 export const ROLE_COLORS = {
   tank:   '#4b9ef4',
   healer: '#4ade80',

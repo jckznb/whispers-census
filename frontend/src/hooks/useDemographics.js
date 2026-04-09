@@ -3,16 +3,18 @@
  * One fetch per page load, cached in module scope — zero Supabase connections.
  *
  * Blob shape:
- *   { updated, pvp: { total, combos, specs, spec_combos }, pve, general }
+ *   { updated, pvp: { total, combos, specs, spec_combos, professions }, pve, general }
  *
  * combos:      [{race, faction, class, count, pct}]
  * specs:       [{class, spec, role, count, pct}]
  * spec_combos: [{race, faction, class, spec, count, pct}]
+ * professions: [{name, type, count, pct}]
  *
  * Returns:
- *   data       — race+class rows for heatmap/bars/explorer
- *   specData   — class+spec rows for By Spec popularity bars
- *   specCombos — race+class+spec rows for heatmap cell drill-down
+ *   data            — race+class rows for heatmap/bars/explorer
+ *   specData        — class+spec rows for By Spec popularity bars
+ *   specCombos      — race+class+spec rows for heatmap cell drill-down
+ *   professionData  — profession popularity rows
  */
 import { useState, useEffect } from 'react'
 
@@ -59,18 +61,20 @@ function mapSpecCombos(specCombos) {
 }
 
 export function useDemographics(context) {
-  const [data,       setData]       = useState([])
-  const [specData,   setSpecData]   = useState([])
-  const [specCombos, setSpecCombos] = useState([])
-  const [loading,    setLoading]    = useState(true)
-  const [error,      setError]      = useState(null)
-  const [snapshotDate, setSnapshotDate] = useState(null)
+  const [data,           setData]           = useState([])
+  const [specData,       setSpecData]       = useState([])
+  const [specCombos,     setSpecCombos]     = useState([])
+  const [professionData, setProfessionData] = useState([])
+  const [loading,        setLoading]        = useState(true)
+  const [error,          setError]          = useState(null)
+  const [snapshotDate,   setSnapshotDate]   = useState(null)
 
   useEffect(() => {
     if (!context) {
       setData([])
       setSpecData([])
       setSpecCombos([])
+      setProfessionData([])
       setLoading(false)
       return
     }
@@ -91,6 +95,7 @@ export function useDemographics(context) {
           setData([])
           setSpecData([])
           setSpecCombos([])
+          setProfessionData([])
           setLoading(false)
           return
         }
@@ -98,6 +103,7 @@ export function useDemographics(context) {
         setData(mapCombos(ctx.combos))
         setSpecData(mapSpecs(ctx.specs))
         setSpecCombos(mapSpecCombos(ctx.spec_combos))
+        setProfessionData(ctx.professions || [])
         setLoading(false)
       } catch (err) {
         if (!cancelled) {
@@ -111,5 +117,5 @@ export function useDemographics(context) {
     return () => { cancelled = true }
   }, [context])
 
-  return { data, specData, specCombos, loading, error, snapshotDate }
+  return { data, specData, specCombos, professionData, loading, error, snapshotDate }
 }

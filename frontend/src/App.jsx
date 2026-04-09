@@ -3,6 +3,7 @@ import { ContextSelector } from './components/ContextSelector'
 import { PopularityBars } from './components/PopularityBars'
 import { RaceClassHeatmap } from './components/RaceClassHeatmap'
 import { ComboExplorer } from './components/ComboExplorer'
+import { ProfessionBars } from './components/ProfessionBars'
 import { useDemographics } from './hooks/useDemographics'
 
 function LoadingOverlay() {
@@ -35,7 +36,7 @@ export default function App() {
   const [context, setContext] = useState('pvp')
   const [barsView, setBarsView] = useState('class')
 
-  const { data, specData, specCombos, loading, error, snapshotDate } = useDemographics(context)
+  const { data, specData, specCombos, professionData, loading, error, snapshotDate } = useDemographics(context)
 
   return (
     <div className="min-h-screen">
@@ -133,6 +134,13 @@ export default function App() {
               <ComboExplorer data={data} />
             </Section>
 
+            {/* Profession distribution */}
+            <Section title="Professions">
+              <p className="text-void-500 text-xs mb-4">
+                Primary profession popularity among players in this dataset.
+              </p>
+              <ProfessionBars data={professionData} />
+            </Section>
 
           </>
         )}
