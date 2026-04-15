@@ -60,6 +60,26 @@ function mapSpecCombos(specCombos) {
   }))
 }
 
+/**
+ * Returns the raw blob JSON (all contexts), useful for tools like the Alt Picker
+ * that need cross-context data without the mapped shape.
+ */
+export function useRawBlob() {
+  const [blob,    setBlob]    = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error,   setError]   = useState(null)
+
+  useEffect(() => {
+    let cancelled = false
+    getBlob()
+      .then(data => { if (!cancelled) { setBlob(data); setLoading(false) } })
+      .catch(err  => { if (!cancelled) { setError(err);  setLoading(false) } })
+    return () => { cancelled = true }
+  }, [])
+
+  return { blob, loading, error }
+}
+
 export function useDemographics(context) {
   const [data,           setData]           = useState([])
   const [specData,       setSpecData]       = useState([])
