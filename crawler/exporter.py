@@ -283,9 +283,14 @@ def export_demographics(snapshot_date: date = None, region: str = 'us') -> str |
         BLOB_UPLOAD_URL,
         content=json_bytes,
         headers={
-            'Authorization': f'Bearer {BLOB_READ_WRITE_TOKEN}',
-            'Content-Type': 'application/json',
-            'x-add-random-suffix': '0',
+            'Authorization':        f'Bearer {BLOB_READ_WRITE_TOKEN}',
+            'Content-Type':         'application/json',
+            'x-add-random-suffix':  '0',
+            # Cap CDN edge cache at 1 hour so new crawl data propagates within
+            # an hour of upload, even for users whose browser cache is stale.
+            # The frontend fetch uses cache:'no-cache' so the browser always
+            # revalidates with the CDN — this header controls the CDN→origin leg.
+            'x-cache-control-max-age': '3600',
         },
         timeout=30,
     )

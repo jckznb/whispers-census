@@ -26,7 +26,11 @@ let _inflight = null
 async function getBlob() {
   if (_cache)    return _cache
   if (_inflight) return _inflight
-  _inflight = fetch(BLOB_URL)
+  // cache: 'no-cache' bypasses browser disk cache and sends a conditional request
+  // (If-None-Match / If-Modified-Since) to the CDN on every page load.
+  // The CDN returns a cheap 304 when content is unchanged, or the fresh payload
+  // when the crawler has uploaded a new version.  No more hard-refreshes needed.
+  _inflight = fetch(BLOB_URL, { cache: 'no-cache' })
     .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() })
     .then(data => { _cache = data; _inflight = null; return data })
   return _inflight
