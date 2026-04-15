@@ -28,24 +28,40 @@ RATE_LIMIT_RPS = 50
 STALENESS_HOURS = 24
 
 # Targeted realms for the general population census.
-# Rather than snowballing the entire US region, we sample a curated set of
-# realms representing different server cultures. Guild rosters from these
-# realms give a representative cross-section of the general playerbase.
+# Two clusters chosen for distinct community character:
 #
-# Categories:
-#   high_pop_pve  — largest PvE-dominant servers (Area 52, Stormrage)
-#   pvp_community — servers with historically active PvP scenes (Tichondrius, Illidan, Mal'Ganis)
-#   rp            — roleplay servers (Moon Guard, Wyrmrest Accord)
-#   latin_america — LA servers (Azralon, Ragnaros)
-#   oceanic       — OCE servers (Barthilas, Frostmourne)
+#   rp      — dedicated RP servers; skews toward casual/social playstyle
+#               Moon Guard, Wyrmrest Accord, Emerald Dream
 #
-# Slugs must match the Blizzard API realm slug format.
+#   general — the ten highest-population US realms; broad cross-section
+#               of the active playerbase weighted toward Horde (Area 52,
+#               Illidan, Mal'Ganis dominate US pop rankings)
+#               Illidan, Area 52, Mal'Ganis, Zul'jin, Tichondrius,
+#               Stormrage, Thrall, Ragnaros, Azralon
+#               + one TBD slot (see FIXME below)
+#
+# Slugs must match the Blizzard API realm slug format exactly.
+# Verify unknown slugs via: GET /data/wow/realm/{slug}?namespace=dynamic-us
 CENSUS_TARGET_REALMS: dict[str, list[str]] = {
-    'high_pop_pve':  ['area-52', 'stormrage', 'dalaran', 'hyjal'],
-    'pvp_community': ['tichondrius', 'illidan', 'malganis', 'bleeding-hollow'],
-    'rp':            ['moon-guard', 'wyrmrest-accord'],
-    'latin_america': ['azralon', 'ragnaros', 'goldrinn'],
-    'oceanic':       ['barthilas', 'frostmourne'],
+    'rp': [
+        'moon-guard',
+        'wyrmrest-accord',
+        'emerald-dream',
+    ],
+    'general': [
+        'illidan',
+        'area-52',
+        'malganis',    # Mal'Ganis
+        'zuljin',      # Zul'jin
+        'tichondrius',
+        'stormrage',
+        # FIXME: "Argeras" could not be matched to a known US realm slug.
+        # Candidates: 'arthas', 'aggramar', 'argent-dawn' (EU only).
+        # Confirm via the Blizzard realm API and add here.
+        'thrall',
+        'ragnaros',    # Latin America
+        'azralon',     # Latin America
+    ],
 }
 
 # Skip profession re-fetches for characters that already have a profession
