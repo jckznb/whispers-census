@@ -4,14 +4,20 @@
  * Props:
  *   results   Array of scored result objects
  *   answers   Quiz answers object (for summary display)
+ *   warning   string | null
  *   onRestart () => void
  */
 import { ResultCard } from './ResultCard'
 
-const ROLE_LABELS = { tank: 'Tank', healer: 'Healer', dps: 'DPS', any: 'Any role' }
-const CONTENT_LABELS = { pvp: 'PvP', pve: 'Mythic+', both: 'PvP & M+' }
-const POP_LABELS = { meta: 'Meta-focused', rare: 'Unique picks', any: 'Any popularity' }
-const FACTION_LABELS = { alliance: 'Alliance', horde: 'Horde', any: 'Either faction' }
+const CONTENT_LABELS  = { pvp: 'PvP', pve: 'Mythic+', both: 'PvP & M+' }
+const POP_LABELS      = { meta: 'Meta-focused', rare: 'Unique picks', any: 'Any popularity' }
+const FACTION_LABELS  = { alliance: 'Alliance', horde: 'Horde', any: 'Either faction' }
+
+function formatRoleLabel(role = []) {
+  if (!role.length) return 'Any class'
+  const parts = role.map(r => r === 'tank' ? 'Can Tank' : 'Can Heal')
+  return 'DPS + ' + parts.join(' + ')
+}
 
 function AnswerPill({ label }) {
   return (
@@ -23,7 +29,7 @@ function AnswerPill({ label }) {
 
 export function ResultsView({ results, answers, warning, onRestart }) {
   const summaryPills = [
-    ROLE_LABELS[answers.role],
+    formatRoleLabel(answers.role),
     CONTENT_LABELS[answers.content],
     POP_LABELS[answers.popularity],
     FACTION_LABELS[answers.faction],
@@ -56,7 +62,7 @@ export function ResultsView({ results, answers, warning, onRestart }) {
         </div>
       </div>
 
-      {/* Fallback warning */}
+      {/* Fallback / data warning */}
       {warning && (
         <div className="flex gap-2 p-3 rounded-lg bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs">
           <span className="shrink-0 mt-0.5">⚠️</span>
@@ -69,7 +75,7 @@ export function ResultsView({ results, answers, warning, onRestart }) {
         <div className="space-y-3">
           {results.map((result, i) => (
             <ResultCard
-              key={`${result.race}|${result.spec ?? result.class}`}
+              key={`${result.race}|${result.class}`}
               result={result}
               rank={i + 1}
             />
@@ -77,11 +83,11 @@ export function ResultsView({ results, answers, warning, onRestart }) {
         </div>
       )}
 
-      {/* Note about data */}
+      {/* Data note */}
       {hasResults && (
         <p className="text-void-600 text-xs">
-          Popularity % is relative to the selected content context. Results from{' '}
-          {CONTENT_LABELS[answers.content]} leaderboard data.
+          Popularity % is relative to the {CONTENT_LABELS[answers.content]} dataset.
+          One race shown per class — the most popular race for each given your filters.
         </p>
       )}
 

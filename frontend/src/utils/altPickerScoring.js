@@ -1,12 +1,36 @@
 /**
- * Alt picker recommendation engine.
- * Takes user answers from the quiz + raw blob data → ranked (race, spec) suggestions.
+ * Alt picker recommendation engine — race + class combos only.
+ *
+ * Role is treated as class capability: selecting "tank" filters to classes
+ * that have a tank spec; selecting "healer" filters to classes with a heal spec.
+ * Selecting both restricts to classes that can do all three (Druid, Paladin, Monk).
+ * Selecting neither allows any class — DPS is always available to every class.
  *
  * scoreResults() returns { results, warning } where:
- *   results — top-5 scored recommendations
- *   warning — string | null — set when we had to fall back (e.g. no spec data)
+ *   results — up to 5 scored recommendations (one per class)
+ *   warning — string | null
  */
 import { VALID_COMBOS } from './constants'
+
+// Classes that have at least one tank spec
+const TANK_CLASSES = new Set([
+  'Death Knight',  // Blood
+  'Warrior',       // Protection
+  'Paladin',       // Protection
+  'Druid',         // Guardian
+  'Monk',          // Brewmaster
+  'Demon Hunter',  // Vengeance
+])
+
+// Classes that have at least one healer spec
+const HEAL_CLASSES = new Set([
+  'Paladin',  // Holy
+  'Priest',   // Discipline, Holy
+  'Druid',    // Restoration
+  'Shaman',   // Restoration
+  'Monk',     // Mistweaver
+  'Evoker',   // Preservation
+])
 
 // Aesthetic vibes with their associated races
 export const AESTHETICS = [
@@ -90,24 +114,14 @@ export const RACE_FACTION = {
   Haranir:               'neutral',
 }
 
-function mergeSpecCombos(blob) {
+/**
+ * Merge pvp + pve combo rows, averaging pct across whichever contexts have data.
+ */
+function mergeCombos(blob) {
   const combined = {}
   for (const ctx of ['pvp', 'pve']) {
-    for (const row of (blob[ctx]?.spec_combos || [])) {
-      const key = `${row.race}|${row.class}|${row.spec}`
-      if (!combined[key]) combined[key] = { ...row, pctSum: 0, pctCount: 0 }
-      combined[key].pctSum   += row.pct
-      combined[key].pctCount += 1
-    }
-  }
-  return Object.values(combined).map(r => ({ ...r, pct: r.pctSum / r.pctCount }))
-}
-
-function mergeSpecs(blob) {
-  const combined = {}
-  for (const ctx of ['pvp', 'pve']) {
-    for (const row of (blob[ctx]?.specs || [])) {
-      const key = `${row.class}|${row.spec}`
+    for (const row of (blob[ctx]?.combos || [])) {
+      const key = `${row.race}|${row.class}`
       if (!combined[key]) combined[key] = { ...row, pctSum: 0, pctCount: 0 }
       combined[key].pctSum   += row.pct
       combined[key].pctCount += 1
@@ -117,168 +131,70 @@ function mergeSpecs(blob) {
 }
 
 /**
- * Build candidates from combo (race+class) data when spec_combos is unavailable.
- * Role filtering is skipped since we don't know each character's spec.
- * Returns { candidates, warning }.
+ * Score and rank race+class combos based on quiz answers.
+ *
+ * @param {object} blob    - Raw demographics blob from Vercel
+ * @param {object} answers - { role: string[], content, popularity, faction, aesthetics: string[] }
+ * @returns {{ results: Array, warning: string|null }}
  */
-function buildComboFallbackCandidates(blob, content) {
-  let combosRaw = []
+export function scoreResults(blob, answers) {
+  const { role = [], content, popularity, faction, aesthetics = [] } = answers
+
+  // Select combo dataset
+  let combosRaw
   if (content === 'pvp') {
     combosRaw = blob.pvp?.combos || []
   } else if (content === 'pve') {
     combosRaw = blob.pve?.combos || []
   } else {
-    // Merge pvp + pve combos
-    const combined = {}
-    for (const ctx of ['pvp', 'pve']) {
-      for (const row of (blob[ctx]?.combos || [])) {
-        const key = `${row.race}|${row.class}`
-        if (!combined[key]) combined[key] = { ...row, pctSum: 0, pctCount: 0 }
-        combined[key].pctSum   += row.pct
-        combined[key].pctCount += 1
-      }
-    }
-    combosRaw = Object.values(combined).map(r => ({ ...r, pct: r.pctSum / r.pctCount }))
-  }
-  return combosRaw
-}
-
-/**
- * Score and rank (race, spec) combos based on quiz answers.
- * Falls back to race+class combos if spec data isn't available for the chosen context.
- *
- * @param {object} blob    - Raw demographics blob from Vercel
- * @param {object} answers - { role, content, popularity, faction, aesthetics[] }
- * @returns {{ results: Array, warning: string|null }}
- */
-export function scoreResults(blob, answers) {
-  const { role, content, popularity, faction, aesthetics = [] } = answers
-
-  // Select dataset(s)
-  let specCombosRaw, specsRaw
-  if (content === 'pvp') {
-    specCombosRaw = blob.pvp?.spec_combos || []
-    specsRaw      = blob.pvp?.specs       || []
-  } else if (content === 'pve') {
-    specCombosRaw = blob.pve?.spec_combos || []
-    specsRaw      = blob.pve?.specs       || []
-  } else {
-    specCombosRaw = mergeSpecCombos(blob)
-    specsRaw      = mergeSpecs(blob)
+    combosRaw = mergeCombos(blob)
   }
 
-  // --- Fallback: no spec data for this content context ---
-  // Use race+class combos instead and skip role filtering.
-  const usingFallback = specCombosRaw.length === 0
-  if (usingFallback) {
-    const combosRaw = buildComboFallbackCandidates(blob, content)
-    if (!combosRaw.length) return { results: [], warning: null }
+  if (!combosRaw.length) return { results: [], warning: null }
 
-    const allPcts = combosRaw.map(r => r.pct).sort((a, b) => a - b)
-    const p25     = allPcts[Math.floor(allPcts.length * 0.25)] ?? 0
-    const p75     = allPcts[Math.floor(allPcts.length * 0.75)] ?? 1
-    const maxPct  = allPcts[allPcts.length - 1] ?? 1
+  const wantsTank = role.includes('tank')
+  const wantsHeal = role.includes('healer')
 
-    const aestheticRaceSet = new Set()
-    for (const id of aesthetics) {
-      const entry = AESTHETICS.find(a => a.id === id)
-      if (entry) entry.races.forEach(r => aestheticRaceSet.add(r))
-    }
-
-    const scored = []
-    for (const row of combosRaw) {
-      const { race, faction: rowFaction, class: cls, pct } = row
-      if (!VALID_COMBOS.has(`${race}|${cls}`)) continue
-
-      const raceFac = RACE_FACTION[race] || 'neutral'
-      if (faction !== 'any' && raceFac !== 'neutral' && raceFac !== faction) continue
-
-      let score = 50
-      if (popularity === 'meta') score += pct * 3
-      else if (popularity === 'rare') score += (maxPct - pct) * 2
-      if (aesthetics.length > 0 && aestheticRaceSet.has(race)) score += 40
-
-      let popularityLabel
-      if (pct >= p75)      popularityLabel = 'Meta pick'
-      else if (pct <= p25) popularityLabel = 'Rare find'
-      else                 popularityLabel = 'Solid choice'
-
-      scored.push({
-        race,
-        faction:        raceFac === 'neutral' ? (rowFaction || 'neutral') : raceFac,
-        class:          cls,
-        spec:           null,
-        role:           null,
-        pct,
-        popularityLabel,
-        score,
-      })
-    }
-
-    scored.sort((a, b) => b.score - a.score)
-
-    // Deduplicate by class (one result per class in fallback mode)
-    const seenClasses = new Set()
-    const results = []
-    for (const r of scored) {
-      if (!seenClasses.has(r.class)) {
-        seenClasses.add(r.class)
-        results.push(r)
-      }
-      if (results.length >= 5) break
-    }
-
-    const ctxLabel = content === 'pvp' ? 'PvP' : content === 'pve' ? 'Mythic+' : 'combined'
-    return {
-      results,
-      warning: `Spec-level data isn't available for the ${ctxLabel} dataset yet — showing by race + class instead. Role preference was not applied.`,
-    }
-  }
-
-  // --- Normal path: spec_combos available ---
-
-  // Build spec → role lookup
-  const specRoleMap = {}
-  for (const s of specsRaw) {
-    specRoleMap[`${s.class}|${s.spec}`] = s.role
-  }
-
-  // Build aesthetic race set for fast lookup
+  // Aesthetic race set
   const aestheticRaceSet = new Set()
   for (const id of aesthetics) {
     const entry = AESTHETICS.find(a => a.id === id)
     if (entry) entry.races.forEach(r => aestheticRaceSet.add(r))
   }
 
-  // Popularity thresholds for labeling
-  const allPcts = specCombosRaw.map(r => r.pct).sort((a, b) => a - b)
-  const p25     = allPcts[Math.floor(allPcts.length * 0.25)] ?? 0
-  const p75     = allPcts[Math.floor(allPcts.length * 0.75)] ?? 1
-  const maxPct  = allPcts[allPcts.length - 1] ?? 1
+  // Popularity thresholds
+  const allPcts = combosRaw.map(r => r.pct).sort((a, b) => a - b)
+  const p25    = allPcts[Math.floor(allPcts.length * 0.25)] ?? 0
+  const p75    = allPcts[Math.floor(allPcts.length * 0.75)] ?? 1
+  const maxPct = allPcts[allPcts.length - 1] ?? 1
 
   const scored = []
 
-  for (const row of specCombosRaw) {
-    const { race, class: cls, spec, pct } = row
+  for (const row of combosRaw) {
+    const { race, faction: rowFaction, class: cls, pct } = row
 
-    // Skip invalid race/class combos
+    // Skip impossible combos
     if (!VALID_COMBOS.has(`${race}|${cls}`)) continue
 
-    // Role filter
-    const specRole = specRoleMap[`${cls}|${spec}`]
-    if (role !== 'any' && specRole && specRole !== role) continue
+    // Class capability filter:
+    //   Selecting tank → class must have a tank spec
+    //   Selecting healer → class must have a heal spec
+    //   Both selected → class must have all three roles (Druid, Paladin, Monk)
+    //   Neither → any class (DPS is available everywhere)
+    if (wantsTank  && !TANK_CLASSES.has(cls)) continue
+    if (wantsHeal  && !HEAL_CLASSES.has(cls)) continue
 
-    // Faction filter
+    // Faction filter — neutral races pass either faction
     const raceFac = RACE_FACTION[race] || 'neutral'
     if (faction !== 'any' && raceFac !== 'neutral' && raceFac !== faction) continue
 
-    // --- Scoring ---
+    // Scoring
     let score = 50
-    if (popularity === 'meta') score += pct * 3
-    else if (popularity === 'rare') score += (maxPct - pct) * 2
+    if (popularity === 'meta')       score += pct * 3
+    else if (popularity === 'rare')  score += (maxPct - pct) * 2
+
     if (aesthetics.length > 0 && aestheticRaceSet.has(race)) score += 40
 
-    // Popularity label for display
     let popularityLabel
     if (pct >= p75)      popularityLabel = 'Meta pick'
     else if (pct <= p25) popularityLabel = 'Rare find'
@@ -286,26 +202,22 @@ export function scoreResults(blob, answers) {
 
     scored.push({
       race,
-      faction:        raceFac,
+      faction:        raceFac === 'neutral' ? (rowFaction || 'neutral') : raceFac,
       class:          cls,
-      spec,
-      role:           specRole || 'dps',
       pct,
       popularityLabel,
       score,
     })
   }
 
-  // Sort descending by score
   scored.sort((a, b) => b.score - a.score)
 
-  // Deduplicate: one result per spec
-  const seenSpecs = new Set()
-  const results   = []
+  // One result per class — take the highest-scored race for each class
+  const seenClasses = new Set()
+  const results     = []
   for (const r of scored) {
-    const key = `${r.class}|${r.spec}`
-    if (!seenSpecs.has(key)) {
-      seenSpecs.add(key)
+    if (!seenClasses.has(r.class)) {
+      seenClasses.add(r.class)
       results.push(r)
     }
     if (results.length >= 5) break

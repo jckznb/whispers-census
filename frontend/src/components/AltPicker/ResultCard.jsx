@@ -1,14 +1,14 @@
 /**
- * ResultCard — displays a single alt recommendation.
+ * ResultCard — displays a single alt recommendation (race + class).
  *
  * Props:
- *   result  { race, faction, class, spec, role, pct, popularityLabel }
+ *   result  { race, faction, class, pct, popularityLabel }
  *   rank    number (1–5)
  */
-import { CLASS_COLORS, ROLE_COLORS, FACTION_COLORS } from '../../utils/constants'
+import { CLASS_COLORS, FACTION_COLORS } from '../../utils/constants'
 
-const ROLE_LABELS = { tank: 'Tank', healer: 'Healer', dps: 'DPS' }
-const FACTION_EMOJI = { alliance: '🔵', horde: '🔴', neutral: '⚪' }
+const FACTION_LABEL = { alliance: 'Alliance', horde: 'Horde', neutral: 'Neutral' }
+const FACTION_EMOJI  = { alliance: '🔵', horde: '🔴', neutral: '⚪' }
 
 const POPULARITY_STYLES = {
   'Meta pick':    'text-amber-400  bg-amber-400/10  border-amber-400/30',
@@ -17,10 +17,10 @@ const POPULARITY_STYLES = {
 }
 
 export function ResultCard({ result, rank }) {
-  const { race, faction, class: cls, spec, role, pct, popularityLabel } = result
-  const classColor   = CLASS_COLORS[cls] || '#9b7dff'
-  const roleColor    = ROLE_COLORS[role] || ROLE_COLORS.dps
-  const factionEmoji = FACTION_EMOJI[faction] || '⚪'
+  const { race, faction, class: cls, pct, popularityLabel } = result
+  const classColor   = CLASS_COLORS[cls]  || '#9b7dff'
+  const factionEmoji = FACTION_EMOJI[faction]  || '⚪'
+  const factionLabel = FACTION_LABEL[faction]  || ''
   const popStyle     = POPULARITY_STYLES[popularityLabel] || POPULARITY_STYLES['Solid choice']
 
   return (
@@ -44,47 +44,28 @@ export function ResultCard({ result, rank }) {
         </span>
       </div>
 
-      <div className="pl-3 pr-6 space-y-3">
-        {/* Main identity */}
+      <div className="pl-3 pr-8 space-y-3">
+        {/* Faction line */}
+        <div className="flex items-center gap-1.5 text-void-400 text-xs">
+          <span>{factionEmoji}</span>
+          <span>{factionLabel}</span>
+        </div>
+
+        {/* Race + Class */}
         <div>
-          <div className="flex items-center gap-1.5 text-void-400 text-xs mb-1">
-            <span>{factionEmoji}</span>
-            <span>{faction === 'neutral' ? 'Neutral' : faction.charAt(0).toUpperCase() + faction.slice(1)}</span>
+          <div className="font-display text-xl font-semibold text-void-50">
+            {race}
           </div>
-          <div className="flex items-baseline gap-2 flex-wrap">
-            <span className="font-display text-xl font-semibold text-void-50">
-              {race}
-            </span>
-          </div>
-          <div className="flex items-center gap-2 mt-0.5">
-            {spec ? (
-              <>
-                <span style={{ color: classColor }} className="font-semibold text-sm">{spec}</span>
-                <span className="text-void-500 text-sm">{cls}</span>
-              </>
-            ) : (
-              <span style={{ color: classColor }} className="font-semibold text-sm">{cls}</span>
-            )}
+          <div
+            className="font-semibold text-sm mt-0.5"
+            style={{ color: classColor }}
+          >
+            {cls}
           </div>
         </div>
 
         {/* Tags row */}
         <div className="flex flex-wrap gap-2">
-          {/* Role badge — only shown when spec data is available */}
-          {role && (
-            <span
-              className="text-xs px-2 py-0.5 rounded border"
-              style={{
-                color: roleColor,
-                backgroundColor: `${roleColor}18`,
-                borderColor:     `${roleColor}40`,
-              }}
-            >
-              {ROLE_LABELS[role] || 'DPS'}
-            </span>
-          )}
-
-          {/* Popularity label */}
           <span className={`text-xs px-2 py-0.5 rounded border ${popStyle}`}>
             {popularityLabel}
           </span>

@@ -1,15 +1,16 @@
 /**
- * AltPicker — multi-step quiz that recommends race+spec combos.
+ * AltPicker — multi-step quiz that recommends race + class combos.
  *
  * Quiz flow:
- *   Step 0: Role       (tank / healer / dps / any)
- *   Step 1: Content    (pvp / pve / both)
- *   Step 2: Popularity (meta / rare / any)
- *   Step 3: Faction    (alliance / horde / any)
- *   Step 4: Aesthetics (multi-select vibes, optional)
+ *   Step 0: Role capability  (multi-select: tank / healer — neither = any class)
+ *   Step 1: Content          (pvp / pve / both)
+ *   Step 2: Popularity       (meta / rare / any)
+ *   Step 3: Faction          (alliance / horde / any)
+ *   Step 4: Aesthetics       (multi-select vibes, optional)
  *   → Results
  *
- * Scoring runs entirely client-side against the already-fetched demographics blob.
+ * Scoring runs client-side against the already-fetched demographics blob,
+ * using race+class combo counts only (no spec data required).
  */
 import { useState, useMemo } from 'react'
 import { QuizStep }    from './QuizStep'
@@ -19,20 +20,29 @@ import { AESTHETICS, scoreResults } from '../../utils/altPickerScoring'
 const STEPS = [
   {
     id:       'role',
-    question: 'What do you want to do?',
-    subtext:  'Your preferred role in group content',
-    type:     'single',
+    question: 'What roles do you want available?',
+    subtext:  'DPS is always an option — check anything extra you want your class to support',
+    type:     'multi',
+    optional: true,  // selecting nothing = any class
     options: [
-      { value: 'tank',   label: 'Tank',   emoji: '🛡️', desc: 'Lead the group, take the hits' },
-      { value: 'healer', label: 'Healer', emoji: '💚', desc: 'Keep the party alive' },
-      { value: 'dps',    label: 'DPS',    emoji: '⚔️', desc: 'Deal as much damage as possible' },
-      { value: 'any',    label: 'Any',    emoji: '🎲', desc: "I'll try anything" },
+      {
+        value: 'tank',
+        label: 'Can Tank',
+        emoji: '🛡️',
+        desc:  'Has at least one tank specialization',
+      },
+      {
+        value: 'healer',
+        label: 'Can Heal',
+        emoji: '💚',
+        desc:  'Has at least one healer specialization',
+      },
     ],
   },
   {
     id:       'content',
     question: 'What content do you push?',
-    subtext:  'Shapes which leaderboard data we use for recommendations',
+    subtext:  'Shapes which dataset we pull popularity from',
     type:     'single',
     options: [
       { value: 'pvp',  label: 'PvP',     emoji: '⚔️', desc: 'Arena, Rated BGs, Solo Shuffle' },
@@ -46,9 +56,9 @@ const STEPS = [
     subtext:  'Affects how we weight popularity in the results',
     type:     'single',
     options: [
-      { value: 'meta', label: 'Give me the meta',    emoji: '🔥', desc: 'Play what top players play' },
-      { value: 'rare', label: "I'm a hipster",       emoji: '🦄', desc: 'Less common, more unique' },
-      { value: 'any',  label: "Don't care",          emoji: '😐', desc: 'Just show me what fits' },
+      { value: 'meta', label: 'Give me the meta',  emoji: '🔥', desc: 'Play what top players play' },
+      { value: 'rare', label: "I'm a hipster",     emoji: '🦄', desc: 'Less common, more unique' },
+      { value: 'any',  label: "Don't care",        emoji: '😐', desc: 'Just show me what fits' },
     ],
   },
   {
@@ -78,7 +88,7 @@ const STEPS = [
 ]
 
 const INITIAL_ANSWERS = {
-  role:       null,
+  role:       [],    // empty array = any class
   content:    null,
   popularity: null,
   faction:    null,
@@ -86,13 +96,14 @@ const INITIAL_ANSWERS = {
 }
 
 function isStepComplete(step, answers) {
-  if (step.type === 'multi') return true  // multi steps are always skippable
+  // Multi-select steps are always advanceable (zero selections = "any")
+  if (step.type === 'multi') return true
   return answers[step.id] !== null && answers[step.id] !== undefined
 }
 
 export function AltPicker({ blob }) {
-  const [stepIndex, setStepIndex] = useState(0)
-  const [answers,   setAnswers]   = useState(INITIAL_ANSWERS)
+  const [stepIndex,   setStepIndex]   = useState(0)
+  const [answers,     setAnswers]     = useState(INITIAL_ANSWERS)
   const [showResults, setShowResults] = useState(false)
 
   const currentStep = STEPS[stepIndex]
@@ -109,10 +120,7 @@ export function AltPicker({ blob }) {
     }
   }
 
-  const handleSkip = () => {
-    // Multi-select step skipped → keep default (empty array)
-    advance()
-  }
+  const handleSkip = () => advance()
 
   const canAdvance = isStepComplete(currentStep, answers)
 
@@ -136,7 +144,7 @@ export function AltPicker({ blob }) {
     )
   }
 
-  // Guard: need at least combo-level data to function
+  // Need at least combo-level data to function
   const hasAnyData = !!(blob.pvp?.combos?.length || blob.pve?.combos?.length)
   if (!hasAnyData) {
     return (
