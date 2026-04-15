@@ -55,9 +55,7 @@ CENSUS_TARGET_REALMS: dict[str, list[str]] = {
         'zuljin',      # Zul'jin
         'tichondrius',
         'stormrage',
-        # FIXME: "Argeras" could not be matched to a known US realm slug.
-        # Candidates: 'arthas', 'aggramar', 'argent-dawn' (EU only).
-        # Confirm via the Blizzard realm API and add here.
+        'sargeras',    # Sargeras
         'thrall',
         'ragnaros',    # Latin America
         'azralon',     # Latin America
