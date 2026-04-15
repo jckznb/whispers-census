@@ -26,7 +26,7 @@ from datetime import date, datetime, timezone, timedelta
 import httpx
 from . import client as api
 from . import db
-from .config import CENSUS_TARGET_REALMS
+from .config import CENSUS_TARGET_REALMS, MANUAL_GUILD_SEEDS
 
 logger = logging.getLogger(__name__)
 
@@ -122,6 +122,48 @@ def seed_guilds(region: str) -> int:
         )
         logger.info(f'Seeded {len(guild_rows)} guild records into census_guilds')
 
+    return len(guild_rows)
+
+
+# ---- Manual seed phase: insert known guilds for RP / low-leaderboard realms --
+
+def seed_guilds_manual(region: str) -> int:
+    """
+    Insert a curated list of known large guilds directly into census_guilds,
+    bypassing the character-based seed for realms where PvP/M+ data is sparse.
+
+    Guild names come from MANUAL_GUILD_SEEDS in config.py — fill that list in
+    with well-known guilds on each target realm, then run:
+
+        python -m scripts.run_crawl --phase census --region us --mode seed
+
+    The roster crawl will fan out from these seeds into the broader guild graph.
+    Returns the number of rows inserted (skips existing entries).
+    """
+    guild_rows = []
+    for realm_slug, names in MANUAL_GUILD_SEEDS.items():
+        for name in names:
+            name = name.strip()
+            if not name:
+                continue
+            guild_rows.append({
+                'name':       name,
+                'name_slug':  _guild_slug(name),
+                'realm_slug': realm_slug,
+                'region':     region,
+            })
+
+    if not guild_rows:
+        logger.info('MANUAL_GUILD_SEEDS is empty — add guild names to config.py first')
+        return 0
+
+    db.upsert(
+        'census_guilds',
+        guild_rows,
+        on_conflict='name_slug,realm_slug,region',
+        conflict_resolution='ignore-duplicates',
+    )
+    logger.info(f'Manually seeded {len(guild_rows)} guilds into census_guilds')
     return len(guild_rows)
 
 
@@ -367,7 +409,8 @@ def crawl_census(
         snapshot_date = date.today()
 
     if mode in ('seed', 'all'):
-        seed_guilds(region)
+        seed_guilds(region)         # from existing PvP/M+ character data
+        seed_guilds_manual(region)  # from MANUAL_GUILD_SEEDS in config.py
 
     if mode in ('roster', 'all'):
         crawl_guild_batch(region, batch_size=batch_size, snapshot_date=snapshot_date)

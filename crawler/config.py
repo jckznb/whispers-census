@@ -62,6 +62,20 @@ CENSUS_TARGET_REALMS: dict[str, list[str]] = {
     ],
 }
 
+# Manual guild seeds for realms that are underrepresented in PvP/M+ leaderboards.
+# RP realms in particular have large active populations but few rated players,
+# so the character-based seed produces almost nothing for them.
+#
+# Add well-known large guilds here — the roster crawl will fan out from these
+# into hundreds of additional guilds via the guild_name field on discovered chars.
+#
+# Guild names must match the in-game name exactly (slugification is automatic).
+MANUAL_GUILD_SEEDS: dict[str, list[str]] = {
+    'moon-guard':      [],  # fill in tomorrow
+    'wyrmrest-accord': [],  # fill in tomorrow
+    'emerald-dream':   [],  # fill in tomorrow
+}
+
 # Skip profession re-fetches for characters that already have a profession
 # snapshot within this many days. Profession choices are stable mid-season,
 # so weekly is fine. This prevents re-fetching ~150k profession endpoints
