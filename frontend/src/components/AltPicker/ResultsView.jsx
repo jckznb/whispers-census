@@ -21,7 +21,7 @@ function AnswerPill({ label }) {
   )
 }
 
-export function ResultsView({ results, answers, onRestart }) {
+export function ResultsView({ results, answers, warning, onRestart }) {
   const summaryPills = [
     ROLE_LABELS[answers.role],
     CONTENT_LABELS[answers.content],
@@ -56,11 +56,23 @@ export function ResultsView({ results, answers, onRestart }) {
         </div>
       </div>
 
+      {/* Fallback warning */}
+      {warning && (
+        <div className="flex gap-2 p-3 rounded-lg bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs">
+          <span className="shrink-0 mt-0.5">⚠️</span>
+          <span>{warning}</span>
+        </div>
+      )}
+
       {/* Result cards */}
       {hasResults && (
         <div className="space-y-3">
           {results.map((result, i) => (
-            <ResultCard key={`${result.race}|${result.spec}`} result={result} rank={i + 1} />
+            <ResultCard
+              key={`${result.race}|${result.spec ?? result.class}`}
+              result={result}
+              rank={i + 1}
+            />
           ))}
         </div>
       )}

@@ -122,8 +122,8 @@ export function AltPicker({ blob }) {
     setShowResults(false)
   }
 
-  const results = useMemo(() => {
-    if (!showResults || !blob) return []
+  const { results, warning } = useMemo(() => {
+    if (!showResults || !blob) return { results: [], warning: null }
     return scoreResults(blob, answers)
   }, [showResults, blob, answers])
 
@@ -136,14 +136,13 @@ export function AltPicker({ blob }) {
     )
   }
 
-  // Check if we have any spec_combo data at all (general pop may be null)
-  const hasPvpData  = !!(blob.pvp?.spec_combos?.length)
-  const hasPveData  = !!(blob.pve?.spec_combos?.length)
-  if (!hasPvpData && !hasPveData) {
+  // Guard: need at least combo-level data to function
+  const hasAnyData = !!(blob.pvp?.combos?.length || blob.pve?.combos?.length)
+  if (!hasAnyData) {
     return (
       <div className="py-12 text-center text-void-500 space-y-2">
-        <p className="text-sm">No spec data available yet.</p>
-        <p className="text-xs">Run a PvP or M+ crawl with profile fetches enabled first.</p>
+        <p className="text-sm">No census data available yet.</p>
+        <p className="text-xs">Run a PvP or M+ crawl first.</p>
       </div>
     )
   }
@@ -154,6 +153,7 @@ export function AltPicker({ blob }) {
         <ResultsView
           results={results}
           answers={answers}
+          warning={warning}
           onRestart={restart}
         />
       ) : (

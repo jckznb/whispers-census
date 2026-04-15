@@ -18,10 +18,10 @@ const POPULARITY_STYLES = {
 
 export function ResultCard({ result, rank }) {
   const { race, faction, class: cls, spec, role, pct, popularityLabel } = result
-  const classColor  = CLASS_COLORS[cls]  || '#9b7dff'
-  const roleColor   = ROLE_COLORS[role]  || ROLE_COLORS.dps
+  const classColor   = CLASS_COLORS[cls] || '#9b7dff'
+  const roleColor    = ROLE_COLORS[role] || ROLE_COLORS.dps
   const factionEmoji = FACTION_EMOJI[faction] || '⚪'
-  const popStyle    = POPULARITY_STYLES[popularityLabel] || POPULARITY_STYLES['Solid choice']
+  const popStyle     = POPULARITY_STYLES[popularityLabel] || POPULARITY_STYLES['Solid choice']
 
   return (
     <div
@@ -57,26 +57,32 @@ export function ResultCard({ result, rank }) {
             </span>
           </div>
           <div className="flex items-center gap-2 mt-0.5">
-            <span style={{ color: classColor }} className="font-semibold text-sm">
-              {spec}
-            </span>
-            <span className="text-void-500 text-sm">{cls}</span>
+            {spec ? (
+              <>
+                <span style={{ color: classColor }} className="font-semibold text-sm">{spec}</span>
+                <span className="text-void-500 text-sm">{cls}</span>
+              </>
+            ) : (
+              <span style={{ color: classColor }} className="font-semibold text-sm">{cls}</span>
+            )}
           </div>
         </div>
 
         {/* Tags row */}
         <div className="flex flex-wrap gap-2">
-          {/* Role badge */}
-          <span
-            className="text-xs px-2 py-0.5 rounded border"
-            style={{
-              color: roleColor,
-              backgroundColor: `${roleColor}18`,
-              borderColor:     `${roleColor}40`,
-            }}
-          >
-            {ROLE_LABELS[role] || 'DPS'}
-          </span>
+          {/* Role badge — only shown when spec data is available */}
+          {role && (
+            <span
+              className="text-xs px-2 py-0.5 rounded border"
+              style={{
+                color: roleColor,
+                backgroundColor: `${roleColor}18`,
+                borderColor:     `${roleColor}40`,
+              }}
+            >
+              {ROLE_LABELS[role] || 'DPS'}
+            </span>
+          )}
 
           {/* Popularity label */}
           <span className={`text-xs px-2 py-0.5 rounded border ${popStyle}`}>
