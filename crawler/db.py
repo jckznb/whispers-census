@@ -50,7 +50,11 @@ def upsert(
 
 def query(table: str, params: dict) -> list[dict]:
     """
-    Raw PostgREST query with arbitrary filter params.
+    Raw PostgREST query with arbitrary filter params. Paginates automatically.
+
+    PostgREST silently caps individual page responses at 1000 rows regardless of
+    what 'limit' value is sent. This function always fetches in 1000-row pages and
+    stops when the caller's limit is reached or the table is exhausted.
 
     Use this for queries that need non-equality operators (is.null, not.is.null, etc.)
     or ordering/limiting that db.select() doesn't support.
@@ -61,24 +65,32 @@ def query(table: str, params: dict) -> list[dict]:
             'region': 'eq.us',
             'last_crawled_at': 'is.null',
             'order': 'crawl_priority.desc',
-            'limit': '200',
+            'limit': '5000',
         })
     """
     results = []
-    offset = int(params.pop('offset', 0))
-    limit = params.get('limit')
-    page_size = int(limit) if limit else 1000
+    offset  = int(params.pop('offset', 0))
+    limit   = int(params.pop('limit')) if 'limit' in params else None
 
     while True:
-        page_params = {**params, 'limit': page_size, 'offset': offset}
+        if limit is not None:
+            remaining = limit - len(results)
+            if remaining <= 0:
+                break
+            fetch_size = min(_BATCH_SIZE, remaining)
+        else:
+            fetch_size = _BATCH_SIZE
+
+        page_params = {**params, 'limit': fetch_size, 'offset': offset}
         r = httpx.get(f'{_REST_BASE}/{table}', params=page_params, headers=_headers(), timeout=_TIMEOUT)
         r.raise_for_status()
         page = r.json()
         results.extend(page)
-        # If a limit was specified by caller, return exactly that many
-        if limit or len(page) < page_size:
-            break
-        offset += page_size
+
+        if len(page) < fetch_size:
+            break  # table exhausted
+        offset += len(page)
+
     return results
 
 
