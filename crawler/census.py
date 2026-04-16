@@ -224,54 +224,65 @@ def crawl_guild_batch(
     from .auth import get_token
     get_token(region)
 
-    results = asyncio.run(_fetch_rosters_async(guilds, region, race_faction))
-
+    # Process guilds in async chunks to cap coroutine count and make failures
+    # recoverable — a network blip only loses one chunk, not the whole run.
+    _ASYNC_CHUNK = 2000
     total_chars = 0
     now = datetime.now(timezone.utc).isoformat()
 
-    for guild, members in results:
-        if members is None:
-            # 404 or error — mark as crawled so we don't keep retrying immediately
-            _mark_guild_crawled(guild['id'], member_count=None)
-            continue
+    for chunk_start in range(0, len(guilds), _ASYNC_CHUNK):
+        chunk = guilds[chunk_start:chunk_start + _ASYNC_CHUNK]
+        logger.info(
+            f'  Chunk {chunk_start // _ASYNC_CHUNK + 1}/'
+            f'{(len(guilds) - 1) // _ASYNC_CHUNK + 1}: '
+            f'{len(chunk)} guilds'
+        )
 
-        # Build character rows — only max-level members
-        char_rows = []
-        for m in members:
-            level = m.get('level', 0)
-            if level < _MIN_LEVEL:
+        results = asyncio.run(_fetch_rosters_async(chunk, region, race_faction))
+
+        for guild, members in results:
+            if members is None:
+                # 404 or error — mark as crawled so we don't keep retrying immediately
+                _mark_guild_crawled(guild['id'], member_count=None)
                 continue
-            char_rows.append({
-                'name':             m['name'],
-                'realm_slug':       m['realm_slug'],
-                'region':           region,
-                'race_id':          m.get('race_id'),
-                'class_id':         m.get('class_id'),
-                'level':            level,
-                'faction':          race_faction.get(m.get('race_id'), ''),
-                'guild_name':       guild['name'],
-                'guild_realm_slug': guild['realm_slug'],
-                'last_api_update':  now,
-                'first_seen':       now,
-            })
 
-        if char_rows:
-            # Filter to target realms — the roster may include characters from
-            # connected realms outside our target list; skip those.
-            char_rows = [r for r in char_rows if r['realm_slug'] in _TARGET_REALM_SLUGS]
+            # Build character rows — only max-level members
+            char_rows = []
+            for m in members:
+                level = m.get('level', 0)
+                if level < _MIN_LEVEL:
+                    continue
+                char_rows.append({
+                    'name':             m['name'],
+                    'realm_slug':       m['realm_slug'],
+                    'region':           region,
+                    'race_id':          m.get('race_id'),
+                    'class_id':         m.get('class_id'),
+                    'level':            level,
+                    'faction':          race_faction.get(m.get('race_id'), ''),
+                    'guild_name':       guild['name'],
+                    'guild_realm_slug': guild['realm_slug'],
+                    'last_api_update':  now,
+                    'first_seen':       now,
+                })
 
-        if char_rows:
-            # ignore-duplicates: don't overwrite spec/ilvl data for leaderboard chars
-            db.upsert(
-                'characters',
-                char_rows,
-                on_conflict='name,realm_slug,region',
-                conflict_resolution='ignore-duplicates',
-            )
-            total_chars += len(char_rows)
+            if char_rows:
+                # Filter to target realms — the roster may include characters from
+                # connected realms outside our target list; skip those.
+                char_rows = [r for r in char_rows if r['realm_slug'] in _TARGET_REALM_SLUGS]
 
-        _mark_guild_crawled(guild['id'], member_count=len(members))
-        logger.debug(f'  {guild["name"]} ({guild["realm_slug"]}): {len(char_rows)} max-level members')
+            if char_rows:
+                # ignore-duplicates: don't overwrite spec/ilvl data for leaderboard chars
+                db.upsert(
+                    'characters',
+                    char_rows,
+                    on_conflict='name,realm_slug,region',
+                    conflict_resolution='ignore-duplicates',
+                )
+                total_chars += len(char_rows)
+
+            _mark_guild_crawled(guild['id'], member_count=len(members))
+            logger.debug(f'  {guild["name"]} ({guild["realm_slug"]}): {len(char_rows)} max-level members')
 
     logger.info(f'Guild batch complete: {len(guilds)} guilds, {total_chars} characters discovered')
     return total_chars
@@ -286,18 +297,22 @@ def _mark_guild_crawled(guild_id: int, member_count: int | None) -> None:
     if member_count is not None:
         payload['member_count'] = member_count
 
-    _httpx.patch(
-        f'{SUPABASE_URL}/rest/v1/census_guilds',
-        json=payload,
-        params={'id': f'eq.{guild_id}'},
-        headers={
-            'apikey':        SUPABASE_SERVICE_KEY,
-            'Authorization': f'Bearer {SUPABASE_SERVICE_KEY}',
-            'Content-Type':  'application/json',
-            'Prefer':        'return=minimal',
-        },
-        timeout=30,
-    ).raise_for_status()
+    try:
+        _httpx.patch(
+            f'{SUPABASE_URL}/rest/v1/census_guilds',
+            json=payload,
+            params={'id': f'eq.{guild_id}'},
+            headers={
+                'apikey':        SUPABASE_SERVICE_KEY,
+                'Authorization': f'Bearer {SUPABASE_SERVICE_KEY}',
+                'Content-Type':  'application/json',
+                'Prefer':        'return=minimal',
+            },
+            timeout=30,
+        ).raise_for_status()
+    except Exception as exc:
+        # Non-fatal — worst case we re-crawl this guild on the next pass
+        logger.warning(f'Failed to mark guild {guild_id} as crawled: {exc}')
 
 
 # ---- Async roster fetching --------------------------------------------------
