@@ -32,23 +32,26 @@ BLOB_UPLOAD_URL = f'https://blob.vercel-storage.com/{BLOB_PATHNAME}'
 
 # Maps blob key → demographics_snapshot context value
 CONTEXT_MAP = {
+    'general': 'general',
+    'rp':      'general_rp',
     'pvp':     'pvp_all',
     'pve':     'mplus_all',
-    'general': 'general',
 }
 
 # Maps blob key → profession RPC function name (None = no professions for that context)
 PROFESSION_RPC_MAP = {
+    'general': None,
+    'rp':      None,
     'pvp':     'get_pvp_profession_stats',
     'pve':     'get_mplus_profession_stats',
-    'general': None,
 }
 
 # Maps blob key → build RPC function name
 BUILD_RPC_MAP = {
+    'general': None,
+    'rp':      None,
     'pvp':     'get_pvp_top_builds',
     'pve':     'get_mplus_top_builds',
-    'general': None,
 }
 
 

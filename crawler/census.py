@@ -388,16 +388,27 @@ async def _fetch_roster_one(
 
 def aggregate_general(region: str, snapshot_date: date) -> None:
     """
-    Run compute_general_demographics_snapshot RPC to build the demographics
-    snapshot for all max-level characters in this region.
+    Run compute_general_demographics_snapshot twice — once per realm type —
+    producing separate context='general' (high-pop realms) and
+    context='general_rp' (RP realms) snapshots.
     """
-    logger.info(f'Computing general demographics snapshot (region={region}, date={snapshot_date})...')
-    db.rpc('compute_general_demographics_snapshot', {
-        'p_snapshot_date': snapshot_date.isoformat(),
-        'p_region':        region,
-        'p_min_level':     _MIN_LEVEL,
-    })
-    logger.info('General demographics snapshot complete')
+    splits = [
+        ('general',    'general',    CENSUS_TARGET_REALMS['general']),
+        ('general_rp', 'RP realms',  CENSUS_TARGET_REALMS['rp']),
+    ]
+    for db_context, label, realm_slugs in splits:
+        logger.info(
+            f'Computing {label} demographics snapshot '
+            f'({len(realm_slugs)} realms, date={snapshot_date})...'
+        )
+        db.rpc('compute_general_demographics_snapshot', {
+            'p_snapshot_date': snapshot_date.isoformat(),
+            'p_region':        region,
+            'p_min_level':     _MIN_LEVEL,
+            'p_context':       db_context,
+            'p_realm_slugs':   realm_slugs,
+        })
+    logger.info('General demographics snapshots complete')
 
 
 # ---- Orchestrator -----------------------------------------------------------

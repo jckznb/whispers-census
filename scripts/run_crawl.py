@@ -39,6 +39,8 @@ def main() -> None:
                         help='Census mode: seed (build guild queue), roster (crawl guilds), all (both)')
     parser.add_argument('--batch-size', type=int, default=200,
                         help='Number of guilds to crawl per census roster run (default: 200)')
+    parser.add_argument('--aggregate-only', action='store_true',
+                        help='Skip crawling; run aggregate + export only (census phase)')
     args = parser.parse_args()
 
     snapshot_date = date.fromisoformat(args.date) if args.date else date.today()
@@ -69,12 +71,13 @@ def main() -> None:
 
     elif args.phase == 'census':
         from crawler.census import crawl_census, aggregate_general
-        crawl_census(
-            region=args.region,
-            snapshot_date=snapshot_date,
-            mode=args.mode,
-            batch_size=args.batch_size,
-        )
+        if not args.aggregate_only:
+            crawl_census(
+                region=args.region,
+                snapshot_date=snapshot_date,
+                mode=args.mode,
+                batch_size=args.batch_size,
+            )
         if not args.no_aggregate:
             aggregate_general(region=args.region, snapshot_date=snapshot_date)
         if not args.no_export:
