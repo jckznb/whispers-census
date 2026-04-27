@@ -11,3 +11,6 @@ frontend/.env
 *.txt
 *.local.md
 .claude/memory/
+
+claude-guidance/
+frontend-vite/

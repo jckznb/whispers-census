@@ -1,0 +1,67 @@
+{
+  "hunter": {
+    "id": 3,
+    "name": "Hunter",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_hunter.jpg"
+  },
+  "warlock": {
+    "id": 9,
+    "name": "Warlock",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_warlock.jpg"
+  },
+  "druid": {
+    "id": 11,
+    "name": "Druid",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_druid.jpg"
+  },
+  "mage": {
+    "id": 8,
+    "name": "Mage",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_mage.jpg"
+  },
+  "death-knight": {
+    "id": 6,
+    "name": "Death Knight",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_deathknight_classicon.jpg"
+  },
+  "demon-hunter": {
+    "id": 12,
+    "name": "Demon Hunter",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_demonhunter.jpg"
+  },
+  "monk": {
+    "id": 10,
+    "name": "Monk",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_monk.jpg"
+  },
+  "priest": {
+    "id": 5,
+    "name": "Priest",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_priest.jpg"
+  },
+  "paladin": {
+    "id": 2,
+    "name": "Paladin",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_paladin.jpg"
+  },
+  "rogue": {
+    "id": 4,
+    "name": "Rogue",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_rogue.jpg"
+  },
+  "shaman": {
+    "id": 7,
+    "name": "Shaman",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_shaman.jpg"
+  },
+  "warrior": {
+    "id": 1,
+    "name": "Warrior",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_warrior.jpg"
+  },
+  "evoker": {
+    "id": 13,
+    "name": "Evoker",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_evoker.jpg"
+  }
+}

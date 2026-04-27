@@ -1,0 +1,150 @@
+{
+  "slug": "earthen-horde",
+  "name": "Earthen (Horde)",
+  "faction": "horde",
+  "lastUpdated": "2026-04-18T00:00:00Z",
+  "baseRace": "earthen",
+  "isNeutralFactionVariant": true,
+  "general": {
+    "classes": [
+      {
+        "slug": "paladin",
+        "name": "Paladin",
+        "percentage": 31.36
+      },
+      {
+        "slug": "shaman",
+        "name": "Shaman",
+        "percentage": 23.14
+      },
+      {
+        "slug": "warrior",
+        "name": "Warrior",
+        "percentage": 15.46
+      },
+      {
+        "slug": "monk",
+        "name": "Monk",
+        "percentage": 8.21
+      },
+      {
+        "slug": "hunter",
+        "name": "Hunter",
+        "percentage": 5.92
+      },
+      {
+        "slug": "mage",
+        "name": "Mage",
+        "percentage": 4.51
+      },
+      {
+        "slug": "priest",
+        "name": "Priest",
+        "percentage": 4.42
+      },
+      {
+        "slug": "warlock",
+        "name": "Warlock",
+        "percentage": 4.24
+      },
+      {
+        "slug": "rogue",
+        "name": "Rogue",
+        "percentage": 2.74
+      }
+    ]
+  },
+  "pvp": {
+    "classes": [
+      {
+        "slug": "paladin",
+        "name": "Paladin",
+        "percentage": 39.02
+      },
+      {
+        "slug": "monk",
+        "name": "Monk",
+        "percentage": 14.29
+      },
+      {
+        "slug": "hunter",
+        "name": "Hunter",
+        "percentage": 11.15
+      },
+      {
+        "slug": "priest",
+        "name": "Priest",
+        "percentage": 10.8
+      },
+      {
+        "slug": "shaman",
+        "name": "Shaman",
+        "percentage": 10.1
+      },
+      {
+        "slug": "warrior",
+        "name": "Warrior",
+        "percentage": 9.41
+      },
+      {
+        "slug": "mage",
+        "name": "Mage",
+        "percentage": 3.48
+      },
+      {
+        "slug": "warlock",
+        "name": "Warlock",
+        "percentage": 1.74
+      }
+    ]
+  },
+  "mythic": {
+    "classes": [
+      {
+        "slug": "paladin",
+        "name": "Paladin",
+        "percentage": 37.81
+      },
+      {
+        "slug": "shaman",
+        "name": "Shaman",
+        "percentage": 22.21
+      },
+      {
+        "slug": "monk",
+        "name": "Monk",
+        "percentage": 11.92
+      },
+      {
+        "slug": "warrior",
+        "name": "Warrior",
+        "percentage": 10.94
+      },
+      {
+        "slug": "mage",
+        "name": "Mage",
+        "percentage": 5.42
+      },
+      {
+        "slug": "hunter",
+        "name": "Hunter",
+        "percentage": 4.23
+      },
+      {
+        "slug": "warlock",
+        "name": "Warlock",
+        "percentage": 3.14
+      },
+      {
+        "slug": "priest",
+        "name": "Priest",
+        "percentage": 3.03
+      },
+      {
+        "slug": "rogue",
+        "name": "Rogue",
+        "percentage": 1.3
+      }
+    ]
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "slug": "worgen",
+  "name": "Worgen",
+  "faction": "alliance",
+  "lastUpdated": "2026-04-18T00:00:00Z",
+  "general": {
+    "classes": [
+      {
+        "slug": "druid",
+        "name": "Druid",
+        "percentage": 32.67
+      },
+      {
+        "slug": "death-knight",
+        "name": "Death Knight",
+        "percentage": 15.6
+      },
+      {
+        "slug": "hunter",
+        "name": "Hunter",
+        "percentage": 12.36
+      },
+      {
+        "slug": "warrior",
+        "name": "Warrior",
+        "percentage": 11.2
+      },
+      {
+        "slug": "rogue",
+        "name": "Rogue",
+        "percentage": 8.55
+      },
+      {
+        "slug": "warlock",
+        "name": "Warlock",
+        "percentage": 7.05
+      },
+      {
+        "slug": "monk",
+        "name": "Monk",
+        "percentage": 5.04
+      },
+      {
+        "slug": "mage",
+        "name": "Mage",
+        "percentage": 3.82
+      },
+      {
+        "slug": "priest",
+        "name": "Priest",
+        "percentage": 3.72
+      }
+    ]
+  },
+  "pvp": {
+    "classes": [
+      {
+        "slug": "druid",
+        "name": "Druid",
+        "percentage": 29.08
+      },
+      {
+        "slug": "hunter",
+        "name": "Hunter",
+        "percentage": 14.36
+      },
+      {
+        "slug": "warrior",
+        "name": "Warrior",
+        "percentage": 13.64
+      },
+      {
+        "slug": "death-knight",
+        "name": "Death Knight",
+        "percentage": 12.84
+      },
+      {
+        "slug": "rogue",
+        "name": "Rogue",
+        "percentage": 8.8
+      },
+      {
+        "slug": "warlock",
+        "name": "Warlock",
+        "percentage": 6.82
+      },
+      {
+        "slug": "monk",
+        "name": "Monk",
+        "percentage": 6.46
+      },
+      {
+        "slug": "priest",
+        "name": "Priest",
+        "percentage": 4.31
+      },
+      {
+        "slug": "mage",
+        "name": "Mage",
+        "percentage": 3.68
+      }
+    ]
+  },
+  "mythic": {
+    "classes": [
+      {
+        "slug": "druid",
+        "name": "Druid",
+        "percentage": 29.89
+      },
+      {
+        "slug": "death-knight",
+        "name": "Death Knight",
+        "percentage": 19.74
+      },
+      {
+        "slug": "hunter",
+        "name": "Hunter",
+        "percentage": 13.58
+      },
+      {
+        "slug": "warrior",
+        "name": "Warrior",
+        "percentage": 11.52
+      },
+      {
+        "slug": "warlock",
+        "name": "Warlock",
+        "percentage": 7.88
+      },
+      {
+        "slug": "monk",
+        "name": "Monk",
+        "percentage": 5.44
+      },
+      {
+        "slug": "rogue",
+        "name": "Rogue",
+        "percentage": 4.5
+      },
+      {
+        "slug": "mage",
+        "name": "Mage",
+        "percentage": 4.03
+      },
+      {
+        "slug": "priest",
+        "name": "Priest",
+        "percentage": 3.43
+      }
+    ]
+  }
+}

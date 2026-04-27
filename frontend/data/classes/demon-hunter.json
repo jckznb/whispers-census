@@ -1,0 +1,116 @@
+{
+  "slug": "demon-hunter",
+  "name": "Demon Hunter",
+  "lastUpdated": "2026-04-18T00:00:00Z",
+  "general": {
+    "races": [
+      {
+        "slug": "blood-elf",
+        "name": "Blood Elf",
+        "percentage": 51.71
+      },
+      {
+        "slug": "night-elf",
+        "name": "Night Elf",
+        "percentage": 38.67
+      },
+      {
+        "slug": "void-elf",
+        "name": "Void Elf",
+        "percentage": 9.61
+      }
+    ],
+    "specs": [
+      {
+        "name": "Devourer",
+        "percentage": 56.43
+      },
+      {
+        "name": "Havoc",
+        "percentage": 25.01
+      },
+      {
+        "name": "Vengeance",
+        "percentage": 18.56
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.4829,
+      "horde": 0.5171
+    }
+  },
+  "pvp": {
+    "races": [
+      {
+        "slug": "night-elf",
+        "name": "Night Elf",
+        "percentage": 45.67
+      },
+      {
+        "slug": "blood-elf",
+        "name": "Blood Elf",
+        "percentage": 35.37
+      },
+      {
+        "slug": "void-elf",
+        "name": "Void Elf",
+        "percentage": 18.96
+      }
+    ],
+    "specs": [
+      {
+        "name": "Devourer",
+        "percentage": 52.69
+      },
+      {
+        "name": "Havoc",
+        "percentage": 40.51
+      },
+      {
+        "name": "Vengeance",
+        "percentage": 6.8
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.6463,
+      "horde": 0.3537
+    }
+  },
+  "mythic": {
+    "races": [
+      {
+        "slug": "blood-elf",
+        "name": "Blood Elf",
+        "percentage": 43.94
+      },
+      {
+        "slug": "night-elf",
+        "name": "Night Elf",
+        "percentage": 39.59
+      },
+      {
+        "slug": "void-elf",
+        "name": "Void Elf",
+        "percentage": 16.46
+      }
+    ],
+    "specs": [
+      {
+        "name": "Devourer",
+        "percentage": 58.79
+      },
+      {
+        "name": "Vengeance",
+        "percentage": 21.83
+      },
+      {
+        "name": "Havoc",
+        "percentage": 19.38
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.5606,
+      "horde": 0.4394
+    }
+  }
+}

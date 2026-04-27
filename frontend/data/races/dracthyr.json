@@ -1,0 +1,133 @@
+{
+  "slug": "dracthyr",
+  "name": "Dracthyr",
+  "isDisambiguation": true,
+  "variants": [
+    "dracthyr-horde",
+    "dracthyr-alliance"
+  ],
+  "lastUpdated": "2026-04-18T00:00:00Z",
+  "factionChoice": {
+    "horde": 0.5897,
+    "alliance": 0.4103
+  },
+  "aggregate": {
+    "general": {
+      "classes": [
+        {
+          "slug": "evoker",
+          "name": "Evoker",
+          "percentage": 68.45
+        },
+        {
+          "slug": "priest",
+          "name": "Priest",
+          "percentage": 7.89
+        },
+        {
+          "slug": "warlock",
+          "name": "Warlock",
+          "percentage": 5.63
+        },
+        {
+          "slug": "warrior",
+          "name": "Warrior",
+          "percentage": 5.36
+        },
+        {
+          "slug": "mage",
+          "name": "Mage",
+          "percentage": 5.36
+        },
+        {
+          "slug": "hunter",
+          "name": "Hunter",
+          "percentage": 4.56
+        },
+        {
+          "slug": "rogue",
+          "name": "Rogue",
+          "percentage": 2.74
+        }
+      ]
+    },
+    "pvp": {
+      "classes": [
+        {
+          "slug": "evoker",
+          "name": "Evoker",
+          "percentage": 67.08
+        },
+        {
+          "slug": "priest",
+          "name": "Priest",
+          "percentage": 10.19
+        },
+        {
+          "slug": "hunter",
+          "name": "Hunter",
+          "percentage": 6.01
+        },
+        {
+          "slug": "warlock",
+          "name": "Warlock",
+          "percentage": 5.27
+        },
+        {
+          "slug": "mage",
+          "name": "Mage",
+          "percentage": 4.86
+        },
+        {
+          "slug": "warrior",
+          "name": "Warrior",
+          "percentage": 3.87
+        },
+        {
+          "slug": "rogue",
+          "name": "Rogue",
+          "percentage": 2.73
+        }
+      ]
+    },
+    "mythic": {
+      "classes": [
+        {
+          "slug": "evoker",
+          "name": "Evoker",
+          "percentage": 65.91
+        },
+        {
+          "slug": "priest",
+          "name": "Priest",
+          "percentage": 10.12
+        },
+        {
+          "slug": "warlock",
+          "name": "Warlock",
+          "percentage": 6.85
+        },
+        {
+          "slug": "mage",
+          "name": "Mage",
+          "percentage": 6.32
+        },
+        {
+          "slug": "hunter",
+          "name": "Hunter",
+          "percentage": 4.74
+        },
+        {
+          "slug": "warrior",
+          "name": "Warrior",
+          "percentage": 4.39
+        },
+        {
+          "slug": "rogue",
+          "name": "Rogue",
+          "percentage": 1.67
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "slug": "dracthyr-alliance",
+  "name": "Dracthyr (Alliance)",
+  "faction": "alliance",
+  "lastUpdated": "2026-04-18T00:00:00Z",
+  "baseRace": "dracthyr",
+  "isNeutralFactionVariant": true,
+  "general": {
+    "classes": [
+      {
+        "slug": "evoker",
+        "name": "Evoker",
+        "percentage": 64.95
+      },
+      {
+        "slug": "priest",
+        "name": "Priest",
+        "percentage": 8.34
+      },
+      {
+        "slug": "mage",
+        "name": "Mage",
+        "percentage": 6.34
+      },
+      {
+        "slug": "warrior",
+        "name": "Warrior",
+        "percentage": 6.06
+      },
+      {
+        "slug": "warlock",
+        "name": "Warlock",
+        "percentage": 5.93
+      },
+      {
+        "slug": "hunter",
+        "name": "Hunter",
+        "percentage": 5.18
+      },
+      {
+        "slug": "rogue",
+        "name": "Rogue",
+        "percentage": 3.21
+      }
+    ]
+  },
+  "pvp": {
+    "classes": [
+      {
+        "slug": "evoker",
+        "name": "Evoker",
+        "percentage": 67.4
+      },
+      {
+        "slug": "priest",
+        "name": "Priest",
+        "percentage": 10.72
+      },
+      {
+        "slug": "hunter",
+        "name": "Hunter",
+        "percentage": 6.15
+      },
+      {
+        "slug": "mage",
+        "name": "Mage",
+        "percentage": 4.56
+      },
+      {
+        "slug": "warlock",
+        "name": "Warlock",
+        "percentage": 4.44
+      },
+      {
+        "slug": "warrior",
+        "name": "Warrior",
+        "percentage": 4.24
+      },
+      {
+        "slug": "rogue",
+        "name": "Rogue",
+        "percentage": 2.49
+      }
+    ]
+  },
+  "mythic": {
+    "classes": [
+      {
+        "slug": "evoker",
+        "name": "Evoker",
+        "percentage": 65.72
+      },
+      {
+        "slug": "priest",
+        "name": "Priest",
+        "percentage": 9.92
+      },
+      {
+        "slug": "mage",
+        "name": "Mage",
+        "percentage": 6.85
+      },
+      {
+        "slug": "warlock",
+        "name": "Warlock",
+        "percentage": 6.27
+      },
+      {
+        "slug": "hunter",
+        "name": "Hunter",
+        "percentage": 4.86
+      },
+      {
+        "slug": "warrior",
+        "name": "Warrior",
+        "percentage": 4.64
+      },
+      {
+        "slug": "rogue",
+        "name": "Rogue",
+        "percentage": 1.75
+      }
+    ]
+  }
+}

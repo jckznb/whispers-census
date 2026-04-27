@@ -1,0 +1,106 @@
+{
+  "slug": "evoker",
+  "name": "Evoker",
+  "lastUpdated": "2026-04-18T00:00:00Z",
+  "general": {
+    "races": [
+      {
+        "slug": "dracthyr-horde",
+        "name": "Dracthyr (Horde)",
+        "percentage": 61.07
+      },
+      {
+        "slug": "dracthyr-alliance",
+        "name": "Dracthyr (Alliance)",
+        "percentage": 38.93
+      }
+    ],
+    "specs": [
+      {
+        "name": "Augmentation",
+        "percentage": 40.91
+      },
+      {
+        "name": "Devastation",
+        "percentage": 29.72
+      },
+      {
+        "name": "Preservation",
+        "percentage": 29.37
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.3893,
+      "horde": 0.6107
+    }
+  },
+  "pvp": {
+    "races": [
+      {
+        "slug": "dracthyr-alliance",
+        "name": "Dracthyr (Alliance)",
+        "percentage": 52.14
+      },
+      {
+        "slug": "dracthyr-horde",
+        "name": "Dracthyr (Horde)",
+        "percentage": 47.86
+      }
+    ],
+    "specs": [
+      {
+        "name": "Devastation",
+        "percentage": 44.01
+      },
+      {
+        "name": "Preservation",
+        "percentage": 39.94
+      },
+      {
+        "name": "Augmentation",
+        "percentage": 16.05
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.5214,
+      "horde": 0.4786
+    }
+  },
+  "mythic": {
+    "races": [
+      {
+        "slug": "dracthyr-horde",
+        "name": "Dracthyr (Horde)",
+        "percentage": 55.27
+      },
+      {
+        "slug": "dracthyr-alliance",
+        "name": "Dracthyr (Alliance)",
+        "percentage": 44.71
+      },
+      {
+        "slug": "night-elf",
+        "name": "Night Elf",
+        "percentage": 0.01
+      }
+    ],
+    "specs": [
+      {
+        "name": "Augmentation",
+        "percentage": 44.19
+      },
+      {
+        "name": "Preservation",
+        "percentage": 30.32
+      },
+      {
+        "name": "Devastation",
+        "percentage": 25.49
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.4473,
+      "horde": 0.5527
+    }
+  }
+}

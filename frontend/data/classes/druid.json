@@ -1,0 +1,223 @@
+{
+  "slug": "druid",
+  "name": "Druid",
+  "lastUpdated": "2026-04-18T00:00:00Z",
+  "general": {
+    "races": [
+      {
+        "slug": "night-elf",
+        "name": "Night Elf",
+        "percentage": 37.71
+      },
+      {
+        "slug": "tauren",
+        "name": "Tauren",
+        "percentage": 14.02
+      },
+      {
+        "slug": "troll",
+        "name": "Troll",
+        "percentage": 10.35
+      },
+      {
+        "slug": "zandalari-troll",
+        "name": "Zandalari Troll",
+        "percentage": 8.78
+      },
+      {
+        "slug": "highmountain-tauren",
+        "name": "Highmountain Tauren",
+        "percentage": 7.64
+      },
+      {
+        "slug": "haranir-horde",
+        "name": "Haranir (Horde)",
+        "percentage": 6.97
+      },
+      {
+        "slug": "worgen",
+        "name": "Worgen",
+        "percentage": 5.22
+      },
+      {
+        "slug": "haranir-alliance",
+        "name": "Haranir (Alliance)",
+        "percentage": 5.12
+      },
+      {
+        "slug": "kul-tiran",
+        "name": "Kul Tiran",
+        "percentage": 4.19
+      }
+    ],
+    "specs": [
+      {
+        "name": "Restoration",
+        "percentage": 42.87
+      },
+      {
+        "name": "Guardian",
+        "percentage": 22.29
+      },
+      {
+        "name": "Balance",
+        "percentage": 20.51
+      },
+      {
+        "name": "Feral",
+        "percentage": 14.34
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.5224,
+      "horde": 0.4776
+    }
+  },
+  "pvp": {
+    "races": [
+      {
+        "slug": "night-elf",
+        "name": "Night Elf",
+        "percentage": 56.78
+      },
+      {
+        "slug": "tauren",
+        "name": "Tauren",
+        "percentage": 10.92
+      },
+      {
+        "slug": "haranir-horde",
+        "name": "Haranir (Horde)",
+        "percentage": 7.66
+      },
+      {
+        "slug": "haranir-alliance",
+        "name": "Haranir (Alliance)",
+        "percentage": 5.73
+      },
+      {
+        "slug": "troll",
+        "name": "Troll",
+        "percentage": 5.45
+      },
+      {
+        "slug": "highmountain-tauren",
+        "name": "Highmountain Tauren",
+        "percentage": 4.56
+      },
+      {
+        "slug": "zandalari-troll",
+        "name": "Zandalari Troll",
+        "percentage": 3.64
+      },
+      {
+        "slug": "worgen",
+        "name": "Worgen",
+        "percentage": 2.88
+      },
+      {
+        "slug": "kul-tiran",
+        "name": "Kul Tiran",
+        "percentage": 2.38
+      }
+    ],
+    "specs": [
+      {
+        "name": "Restoration",
+        "percentage": 32.52
+      },
+      {
+        "name": "Feral",
+        "percentage": 27.12
+      },
+      {
+        "name": "Balance",
+        "percentage": 26.04
+      },
+      {
+        "name": "Guardian",
+        "percentage": 14.32
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.6778,
+      "horde": 0.3222
+    }
+  },
+  "mythic": {
+    "races": [
+      {
+        "slug": "night-elf",
+        "name": "Night Elf",
+        "percentage": 45.17
+      },
+      {
+        "slug": "tauren",
+        "name": "Tauren",
+        "percentage": 12.67
+      },
+      {
+        "slug": "haranir-horde",
+        "name": "Haranir (Horde)",
+        "percentage": 11.14
+      },
+      {
+        "slug": "haranir-alliance",
+        "name": "Haranir (Alliance)",
+        "percentage": 8.24
+      },
+      {
+        "slug": "troll",
+        "name": "Troll",
+        "percentage": 8.15
+      },
+      {
+        "slug": "zandalari-troll",
+        "name": "Zandalari Troll",
+        "percentage": 5.05
+      },
+      {
+        "slug": "highmountain-tauren",
+        "name": "Highmountain Tauren",
+        "percentage": 4.37
+      },
+      {
+        "slug": "worgen",
+        "name": "Worgen",
+        "percentage": 3.24
+      },
+      {
+        "slug": "kul-tiran",
+        "name": "Kul Tiran",
+        "percentage": 1.96
+      },
+      {
+        "slug": "void-elf",
+        "name": "Void Elf",
+        "percentage": 0.0
+      }
+    ],
+    "specs": [
+      {
+        "name": "Restoration",
+        "percentage": 51.97
+      },
+      {
+        "name": "Guardian",
+        "percentage": 21.37
+      },
+      {
+        "name": "Balance",
+        "percentage": 15.27
+      },
+      {
+        "name": "Feral",
+        "percentage": 11.39
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.5862,
+      "horde": 0.4138
+    }
+  }
+}

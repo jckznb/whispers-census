@@ -1,0 +1,282 @@
+{
+  "warrior-arms": {
+    "id": 71,
+    "name": "Arms",
+    "class_slug": "warrior",
+    "class_name": "Warrior",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_warrior_savageblow.jpg"
+  },
+  "warrior-fury": {
+    "id": 72,
+    "name": "Fury",
+    "class_slug": "warrior",
+    "class_name": "Warrior",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_warrior_innerrage.jpg"
+  },
+  "warrior-protection": {
+    "id": 73,
+    "name": "Protection",
+    "class_slug": "warrior",
+    "class_name": "Warrior",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_warrior_defensivestance.jpg"
+  },
+  "paladin-holy": {
+    "id": 65,
+    "name": "Holy",
+    "class_slug": "paladin",
+    "class_name": "Paladin",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_holy_holybolt.jpg"
+  },
+  "paladin-protection": {
+    "id": 66,
+    "name": "Protection",
+    "class_slug": "paladin",
+    "class_name": "Paladin",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_paladin_shieldofthetemplar.jpg"
+  },
+  "paladin-retribution": {
+    "id": 70,
+    "name": "Retribution",
+    "class_slug": "paladin",
+    "class_name": "Paladin",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_holy_auraoflight.jpg"
+  },
+  "hunter-beast-mastery": {
+    "id": 253,
+    "name": "Beast Mastery",
+    "class_slug": "hunter",
+    "class_name": "Hunter",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_hunter_bestialdiscipline.jpg"
+  },
+  "hunter-marksmanship": {
+    "id": 254,
+    "name": "Marksmanship",
+    "class_slug": "hunter",
+    "class_name": "Hunter",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_hunter_focusedaim.jpg"
+  },
+  "hunter-survival": {
+    "id": 255,
+    "name": "Survival",
+    "class_slug": "hunter",
+    "class_name": "Hunter",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_hunter_camouflage.jpg"
+  },
+  "rogue-assassination": {
+    "id": 259,
+    "name": "Assassination",
+    "class_slug": "rogue",
+    "class_name": "Rogue",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_rogue_deadlybrew.jpg"
+  },
+  "rogue-outlaw": {
+    "id": 260,
+    "name": "Outlaw",
+    "class_slug": "rogue",
+    "class_name": "Rogue",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_rogue_waylay.jpg"
+  },
+  "rogue-subtlety": {
+    "id": 261,
+    "name": "Subtlety",
+    "class_slug": "rogue",
+    "class_name": "Rogue",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_stealth.jpg"
+  },
+  "priest-discipline": {
+    "id": 256,
+    "name": "Discipline",
+    "class_slug": "priest",
+    "class_name": "Priest",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_holy_powerwordshield.jpg"
+  },
+  "priest-holy": {
+    "id": 257,
+    "name": "Holy",
+    "class_slug": "priest",
+    "class_name": "Priest",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_holy_guardianspirit.jpg"
+  },
+  "priest-shadow": {
+    "id": 258,
+    "name": "Shadow",
+    "class_slug": "priest",
+    "class_name": "Priest",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_shadow_shadowwordpain.jpg"
+  },
+  "death-knight-blood": {
+    "id": 250,
+    "name": "Blood",
+    "class_slug": "death-knight",
+    "class_name": "Death Knight",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_deathknight_bloodpresence.jpg"
+  },
+  "death-knight-frost": {
+    "id": 251,
+    "name": "Frost",
+    "class_slug": "death-knight",
+    "class_name": "Death Knight",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_deathknight_frostpresence.jpg"
+  },
+  "death-knight-unholy": {
+    "id": 252,
+    "name": "Unholy",
+    "class_slug": "death-knight",
+    "class_name": "Death Knight",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_deathknight_unholypresence.jpg"
+  },
+  "shaman-elemental": {
+    "id": 262,
+    "name": "Elemental",
+    "class_slug": "shaman",
+    "class_name": "Shaman",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_nature_lightning.jpg"
+  },
+  "shaman-enhancement": {
+    "id": 263,
+    "name": "Enhancement",
+    "class_slug": "shaman",
+    "class_name": "Shaman",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_shaman_improvedstormstrike.jpg"
+  },
+  "shaman-restoration": {
+    "id": 264,
+    "name": "Restoration",
+    "class_slug": "shaman",
+    "class_name": "Shaman",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_nature_magicimmunity.jpg"
+  },
+  "mage-arcane": {
+    "id": 62,
+    "name": "Arcane",
+    "class_slug": "mage",
+    "class_name": "Mage",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_holy_magicalsentry.jpg"
+  },
+  "mage-fire": {
+    "id": 63,
+    "name": "Fire",
+    "class_slug": "mage",
+    "class_name": "Mage",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_fire_firebolt02.jpg"
+  },
+  "mage-frost": {
+    "id": 64,
+    "name": "Frost",
+    "class_slug": "mage",
+    "class_name": "Mage",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_frost_frostbolt02.jpg"
+  },
+  "warlock-affliction": {
+    "id": 265,
+    "name": "Affliction",
+    "class_slug": "warlock",
+    "class_name": "Warlock",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_shadow_deathcoil.jpg"
+  },
+  "warlock-demonology": {
+    "id": 266,
+    "name": "Demonology",
+    "class_slug": "warlock",
+    "class_name": "Warlock",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_shadow_metamorphosis.jpg"
+  },
+  "warlock-destruction": {
+    "id": 267,
+    "name": "Destruction",
+    "class_slug": "warlock",
+    "class_name": "Warlock",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_shadow_rainoffire.jpg"
+  },
+  "monk-brewmaster": {
+    "id": 268,
+    "name": "Brewmaster",
+    "class_slug": "monk",
+    "class_name": "Monk",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_monk_brewmaster_spec.jpg"
+  },
+  "monk-windwalker": {
+    "id": 269,
+    "name": "Windwalker",
+    "class_slug": "monk",
+    "class_name": "Monk",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_monk_windwalker_spec.jpg"
+  },
+  "monk-mistweaver": {
+    "id": 270,
+    "name": "Mistweaver",
+    "class_slug": "monk",
+    "class_name": "Monk",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_monk_mistweaver_spec.jpg"
+  },
+  "druid-balance": {
+    "id": 102,
+    "name": "Balance",
+    "class_slug": "druid",
+    "class_name": "Druid",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_nature_starfall.jpg"
+  },
+  "druid-feral": {
+    "id": 103,
+    "name": "Feral",
+    "class_slug": "druid",
+    "class_name": "Druid",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_druid_catform.jpg"
+  },
+  "druid-guardian": {
+    "id": 104,
+    "name": "Guardian",
+    "class_slug": "druid",
+    "class_name": "Druid",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_racial_bearform.jpg"
+  },
+  "druid-restoration": {
+    "id": 105,
+    "name": "Restoration",
+    "class_slug": "druid",
+    "class_name": "Druid",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/spell_nature_healingtouch.jpg"
+  },
+  "demon-hunter-havoc": {
+    "id": 577,
+    "name": "Havoc",
+    "class_slug": "demon-hunter",
+    "class_name": "Demon Hunter",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_demonhunter_specdps.jpg"
+  },
+  "demon-hunter-vengeance": {
+    "id": 581,
+    "name": "Vengeance",
+    "class_slug": "demon-hunter",
+    "class_name": "Demon Hunter",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/ability_demonhunter_spectank.jpg"
+  },
+  "demon-hunter-devourer": {
+    "id": 1480,
+    "name": "Devourer",
+    "class_slug": "demon-hunter",
+    "class_name": "Demon Hunter",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_demonhunter_void_64.jpg"
+  },
+  "evoker-devastation": {
+    "id": 1467,
+    "name": "Devastation",
+    "class_slug": "evoker",
+    "class_name": "Evoker",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_evoker_devastation.jpg"
+  },
+  "evoker-preservation": {
+    "id": 1468,
+    "name": "Preservation",
+    "class_slug": "evoker",
+    "class_name": "Evoker",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_evoker_preservation.jpg"
+  },
+  "evoker-augmentation": {
+    "id": 1473,
+    "name": "Augmentation",
+    "class_slug": "evoker",
+    "class_name": "Evoker",
+    "icon": "https://render.worldofwarcraft.com/us/icons/56/classicon_evoker_augmentation.jpg"
+  }
+}

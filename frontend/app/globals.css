@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/* ── Static design tokens ─────────────────────────────────────────────────── */
+@theme {
+  /* Void purple scale */
+  --color-void-50:  #f0ebff;
+  --color-void-100: #d9ceff;
+  --color-void-200: #b89dff;
+  --color-void-300: #9b6dff;
+  --color-void-400: #7c3aed;
+  --color-void-500: #5c2d91;
+  --color-void-600: #3d1a6e;
+  --color-void-700: #261048;
+  --color-void-800: #1a0a30;
+  --color-void-900: #0d0518;
+  --color-void-950: #06020d;
+
+  /* Yogg-Saron accent palette */
+  --color-yogg-purple:   #9b4cc4;
+  --color-yogg-eye:      #c084fc;
+  --color-yogg-tentacle: #4c1d95;
+  --color-yogg-void:     #1e0a3c;
+
+  /* Void background gradient */
+  --background-image-void-gradient: radial-gradient(ellipse at top, #1a0a30 0%, #06020d 70%);
+}
+
+/* ── Font tokens — reference CSS vars injected by next/font ───────────────── */
+@theme inline {
+  --font-sans:    var(--font-inter);
+  --font-display: var(--font-cinzel);
+}
+
+/* ── Base styles ──────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    @apply bg-void-950 text-void-100;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-void-gradient font-sans antialiased;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-void-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-void-600 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-yogg-purple;
+  }
+}
+
+/* ── Component classes ────────────────────────────────────────────────────── */
+@layer components {
+  .card {
+    @apply bg-void-800/60 border border-void-600/30 rounded-xl backdrop-blur-sm;
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 bg-yogg-purple hover:bg-void-400 text-white rounded-lg
+           font-medium transition-colors duration-150 focus:outline-none
+           focus:ring-2 focus:ring-yogg-eye focus:ring-offset-2 focus:ring-offset-void-900;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 text-void-300 hover:text-void-100 hover:bg-void-700/50
+           rounded-lg font-medium transition-colors duration-150;
+  }
+
+  .section-title {
+    @apply font-display text-xl font-semibold text-void-100 tracking-wide;
+  }
+
+  /* Animated eye glow for accents */
+  .glow-eye {
+    text-shadow: 0 0 20px rgba(192, 132, 252, 0.6), 0 0 40px rgba(156, 76, 196, 0.3);
+  }
+}

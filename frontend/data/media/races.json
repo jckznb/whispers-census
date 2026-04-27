@@ -1,0 +1,206 @@
+{
+  "human": {
+    "id": 1,
+    "name": "Human",
+    "faction": "",
+    "icon": null
+  },
+  "troll": {
+    "id": 8,
+    "name": "Troll",
+    "faction": "",
+    "icon": null
+  },
+  "draenei": {
+    "id": 11,
+    "name": "Draenei",
+    "faction": "",
+    "icon": null
+  },
+  "blood-elf": {
+    "id": 10,
+    "name": "Blood Elf",
+    "faction": "",
+    "icon": null
+  },
+  "night-elf": {
+    "id": 4,
+    "name": "Night Elf",
+    "faction": "",
+    "icon": null
+  },
+  "dwarf": {
+    "id": 3,
+    "name": "Dwarf",
+    "faction": "",
+    "icon": null
+  },
+  "pandaren": {
+    "id": 26,
+    "name": "Pandaren",
+    "faction": "neutral",
+    "icon": null
+  },
+  "pandaren-alliance": {
+    "id": 26,
+    "name": "Pandaren",
+    "faction": "alliance",
+    "icon": null
+  },
+  "pandaren-horde": {
+    "id": 26,
+    "name": "Pandaren",
+    "faction": "horde",
+    "icon": null
+  },
+  "tauren": {
+    "id": 6,
+    "name": "Tauren",
+    "faction": "",
+    "icon": null
+  },
+  "undead": {
+    "id": 5,
+    "name": "Undead",
+    "faction": "",
+    "icon": null
+  },
+  "orc": {
+    "id": 2,
+    "name": "Orc",
+    "faction": "",
+    "icon": null
+  },
+  "gnome": {
+    "id": 7,
+    "name": "Gnome",
+    "faction": "",
+    "icon": null
+  },
+  "zandalari-troll": {
+    "id": 31,
+    "name": "Zandalari Troll",
+    "faction": "",
+    "icon": null
+  },
+  "goblin": {
+    "id": 9,
+    "name": "Goblin",
+    "faction": "",
+    "icon": null
+  },
+  "kul-tiran": {
+    "id": 32,
+    "name": "Kul Tiran",
+    "faction": "",
+    "icon": null
+  },
+  "lightforged-draenei": {
+    "id": 30,
+    "name": "Lightforged Draenei",
+    "faction": "",
+    "icon": null
+  },
+  "highmountain-tauren": {
+    "id": 28,
+    "name": "Highmountain Tauren",
+    "faction": "",
+    "icon": null
+  },
+  "nightborne": {
+    "id": 27,
+    "name": "Nightborne",
+    "faction": "",
+    "icon": null
+  },
+  "worgen": {
+    "id": 22,
+    "name": "Worgen",
+    "faction": "",
+    "icon": null
+  },
+  "dark-iron-dwarf": {
+    "id": 34,
+    "name": "Dark Iron Dwarf",
+    "faction": "",
+    "icon": null
+  },
+  "vulpera": {
+    "id": 35,
+    "name": "Vulpera",
+    "faction": "",
+    "icon": null
+  },
+  "mag-har-orc": {
+    "id": 36,
+    "name": "Mag'har Orc",
+    "faction": "",
+    "icon": null
+  },
+  "void-elf": {
+    "id": 29,
+    "name": "Void Elf",
+    "faction": "",
+    "icon": null
+  },
+  "mechagnome": {
+    "id": 37,
+    "name": "Mechagnome",
+    "faction": "",
+    "icon": null
+  },
+  "dracthyr": {
+    "id": 70,
+    "name": "Dracthyr",
+    "faction": "neutral",
+    "icon": null
+  },
+  "dracthyr-alliance": {
+    "id": 70,
+    "name": "Dracthyr",
+    "faction": "alliance",
+    "icon": null
+  },
+  "dracthyr-horde": {
+    "id": 70,
+    "name": "Dracthyr",
+    "faction": "horde",
+    "icon": null
+  },
+  "haranir": {
+    "id": 91,
+    "name": "Haranir",
+    "faction": "neutral",
+    "icon": null
+  },
+  "haranir-alliance": {
+    "id": 91,
+    "name": "Haranir",
+    "faction": "alliance",
+    "icon": null
+  },
+  "haranir-horde": {
+    "id": 91,
+    "name": "Haranir",
+    "faction": "horde",
+    "icon": null
+  },
+  "earthen": {
+    "id": 85,
+    "name": "Earthen",
+    "faction": "neutral",
+    "icon": null
+  },
+  "earthen-alliance": {
+    "id": 85,
+    "name": "Earthen",
+    "faction": "alliance",
+    "icon": null
+  },
+  "earthen-horde": {
+    "id": 85,
+    "name": "Earthen",
+    "faction": "horde",
+    "icon": null
+  }
+}

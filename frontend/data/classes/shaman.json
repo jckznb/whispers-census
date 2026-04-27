@@ -1,0 +1,341 @@
+{
+  "slug": "shaman",
+  "name": "Shaman",
+  "lastUpdated": "2026-04-18T00:00:00Z",
+  "general": {
+    "races": [
+      {
+        "slug": "orc",
+        "name": "Orc",
+        "percentage": 15.44
+      },
+      {
+        "slug": "dwarf",
+        "name": "Dwarf",
+        "percentage": 12.25
+      },
+      {
+        "slug": "draenei",
+        "name": "Draenei",
+        "percentage": 11.81
+      },
+      {
+        "slug": "troll",
+        "name": "Troll",
+        "percentage": 7.02
+      },
+      {
+        "slug": "mag-har-orc",
+        "name": "Mag'har Orc",
+        "percentage": 6.54
+      },
+      {
+        "slug": "dark-iron-dwarf",
+        "name": "Dark Iron Dwarf",
+        "percentage": 6.24
+      },
+      {
+        "slug": "vulpera",
+        "name": "Vulpera",
+        "percentage": 6.23
+      },
+      {
+        "slug": "tauren",
+        "name": "Tauren",
+        "percentage": 5.95
+      },
+      {
+        "slug": "goblin",
+        "name": "Goblin",
+        "percentage": 4.44
+      },
+      {
+        "slug": "zandalari-troll",
+        "name": "Zandalari Troll",
+        "percentage": 4.35
+      },
+      {
+        "slug": "haranir-alliance",
+        "name": "Haranir (Alliance)",
+        "percentage": 3.04
+      },
+      {
+        "slug": "highmountain-tauren",
+        "name": "Highmountain Tauren",
+        "percentage": 2.99
+      },
+      {
+        "slug": "haranir-horde",
+        "name": "Haranir (Horde)",
+        "percentage": 2.98
+      },
+      {
+        "slug": "earthen-horde",
+        "name": "Earthen (Horde)",
+        "percentage": 2.63
+      },
+      {
+        "slug": "pandaren-horde",
+        "name": "Pandaren (Horde)",
+        "percentage": 2.45
+      },
+      {
+        "slug": "kul-tiran",
+        "name": "Kul Tiran",
+        "percentage": 2.0
+      },
+      {
+        "slug": "pandaren-alliance",
+        "name": "Pandaren (Alliance)",
+        "percentage": 1.95
+      },
+      {
+        "slug": "earthen-alliance",
+        "name": "Earthen (Alliance)",
+        "percentage": 1.69
+      }
+    ],
+    "specs": [
+      {
+        "name": "Elemental",
+        "percentage": 39.55
+      },
+      {
+        "name": "Restoration",
+        "percentage": 39.48
+      },
+      {
+        "name": "Enhancement",
+        "percentage": 20.97
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.3898,
+      "horde": 0.6102
+    }
+  },
+  "pvp": {
+    "races": [
+      {
+        "slug": "orc",
+        "name": "Orc",
+        "percentage": 29.27
+      },
+      {
+        "slug": "dwarf",
+        "name": "Dwarf",
+        "percentage": 12.49
+      },
+      {
+        "slug": "dark-iron-dwarf",
+        "name": "Dark Iron Dwarf",
+        "percentage": 9.29
+      },
+      {
+        "slug": "highmountain-tauren",
+        "name": "Highmountain Tauren",
+        "percentage": 8.39
+      },
+      {
+        "slug": "draenei",
+        "name": "Draenei",
+        "percentage": 7.51
+      },
+      {
+        "slug": "haranir-alliance",
+        "name": "Haranir (Alliance)",
+        "percentage": 6.11
+      },
+      {
+        "slug": "troll",
+        "name": "Troll",
+        "percentage": 4.75
+      },
+      {
+        "slug": "tauren",
+        "name": "Tauren",
+        "percentage": 4.08
+      },
+      {
+        "slug": "haranir-horde",
+        "name": "Haranir (Horde)",
+        "percentage": 3.86
+      },
+      {
+        "slug": "mag-har-orc",
+        "name": "Mag'har Orc",
+        "percentage": 3.18
+      },
+      {
+        "slug": "zandalari-troll",
+        "name": "Zandalari Troll",
+        "percentage": 2.7
+      },
+      {
+        "slug": "kul-tiran",
+        "name": "Kul Tiran",
+        "percentage": 2.04
+      },
+      {
+        "slug": "goblin",
+        "name": "Goblin",
+        "percentage": 1.62
+      },
+      {
+        "slug": "vulpera",
+        "name": "Vulpera",
+        "percentage": 1.56
+      },
+      {
+        "slug": "pandaren-alliance",
+        "name": "Pandaren (Alliance)",
+        "percentage": 1.12
+      },
+      {
+        "slug": "earthen-alliance",
+        "name": "Earthen (Alliance)",
+        "percentage": 0.74
+      },
+      {
+        "slug": "pandaren-horde",
+        "name": "Pandaren (Horde)",
+        "percentage": 0.74
+      },
+      {
+        "slug": "earthen-horde",
+        "name": "Earthen (Horde)",
+        "percentage": 0.53
+      }
+    ],
+    "specs": [
+      {
+        "name": "Elemental",
+        "percentage": 41.03
+      },
+      {
+        "name": "Enhancement",
+        "percentage": 30.65
+      },
+      {
+        "name": "Restoration",
+        "percentage": 28.32
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.393,
+      "horde": 0.607
+    }
+  },
+  "mythic": {
+    "races": [
+      {
+        "slug": "dwarf",
+        "name": "Dwarf",
+        "percentage": 15.5
+      },
+      {
+        "slug": "orc",
+        "name": "Orc",
+        "percentage": 14.46
+      },
+      {
+        "slug": "draenei",
+        "name": "Draenei",
+        "percentage": 13.73
+      },
+      {
+        "slug": "troll",
+        "name": "Troll",
+        "percentage": 7.0
+      },
+      {
+        "slug": "tauren",
+        "name": "Tauren",
+        "percentage": 6.29
+      },
+      {
+        "slug": "haranir-horde",
+        "name": "Haranir (Horde)",
+        "percentage": 6.19
+      },
+      {
+        "slug": "haranir-alliance",
+        "name": "Haranir (Alliance)",
+        "percentage": 6.13
+      },
+      {
+        "slug": "mag-har-orc",
+        "name": "Mag'har Orc",
+        "percentage": 5.35
+      },
+      {
+        "slug": "dark-iron-dwarf",
+        "name": "Dark Iron Dwarf",
+        "percentage": 5.31
+      },
+      {
+        "slug": "vulpera",
+        "name": "Vulpera",
+        "percentage": 4.41
+      },
+      {
+        "slug": "goblin",
+        "name": "Goblin",
+        "percentage": 3.38
+      },
+      {
+        "slug": "zandalari-troll",
+        "name": "Zandalari Troll",
+        "percentage": 3.3
+      },
+      {
+        "slug": "pandaren-alliance",
+        "name": "Pandaren (Alliance)",
+        "percentage": 1.97
+      },
+      {
+        "slug": "pandaren-horde",
+        "name": "Pandaren (Horde)",
+        "percentage": 1.93
+      },
+      {
+        "slug": "highmountain-tauren",
+        "name": "Highmountain Tauren",
+        "percentage": 1.85
+      },
+      {
+        "slug": "earthen-horde",
+        "name": "Earthen (Horde)",
+        "percentage": 1.35
+      },
+      {
+        "slug": "kul-tiran",
+        "name": "Kul Tiran",
+        "percentage": 1.09
+      },
+      {
+        "slug": "earthen-alliance",
+        "name": "Earthen (Alliance)",
+        "percentage": 0.77
+      }
+    ],
+    "specs": [
+      {
+        "name": "Restoration",
+        "percentage": 44.59
+      },
+      {
+        "name": "Elemental",
+        "percentage": 38.62
+      },
+      {
+        "name": "Enhancement",
+        "percentage": 16.8
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.4448,
+      "horde": 0.5552
+    }
+  }
+}

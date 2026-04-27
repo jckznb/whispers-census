@@ -1,0 +1,521 @@
+{
+  "slug": "hunter",
+  "name": "Hunter",
+  "lastUpdated": "2026-04-18T00:00:00Z",
+  "general": {
+    "races": [
+      {
+        "slug": "blood-elf",
+        "name": "Blood Elf",
+        "percentage": 14.11
+      },
+      {
+        "slug": "night-elf",
+        "name": "Night Elf",
+        "percentage": 13.34
+      },
+      {
+        "slug": "orc",
+        "name": "Orc",
+        "percentage": 13.07
+      },
+      {
+        "slug": "dwarf",
+        "name": "Dwarf",
+        "percentage": 6.68
+      },
+      {
+        "slug": "human",
+        "name": "Human",
+        "percentage": 6.14
+      },
+      {
+        "slug": "void-elf",
+        "name": "Void Elf",
+        "percentage": 6.1
+      },
+      {
+        "slug": "troll",
+        "name": "Troll",
+        "percentage": 4.73
+      },
+      {
+        "slug": "vulpera",
+        "name": "Vulpera",
+        "percentage": 3.51
+      },
+      {
+        "slug": "mag-har-orc",
+        "name": "Mag'har Orc",
+        "percentage": 3.5
+      },
+      {
+        "slug": "worgen",
+        "name": "Worgen",
+        "percentage": 2.49
+      },
+      {
+        "slug": "tauren",
+        "name": "Tauren",
+        "percentage": 2.3
+      },
+      {
+        "slug": "goblin",
+        "name": "Goblin",
+        "percentage": 2.18
+      },
+      {
+        "slug": "dracthyr-horde",
+        "name": "Dracthyr (Horde)",
+        "percentage": 1.92
+      },
+      {
+        "slug": "zandalari-troll",
+        "name": "Zandalari Troll",
+        "percentage": 1.85
+      },
+      {
+        "slug": "nightborne",
+        "name": "Nightborne",
+        "percentage": 1.75
+      },
+      {
+        "slug": "dracthyr-alliance",
+        "name": "Dracthyr (Alliance)",
+        "percentage": 1.68
+      },
+      {
+        "slug": "undead",
+        "name": "Undead",
+        "percentage": 1.63
+      },
+      {
+        "slug": "haranir-horde",
+        "name": "Haranir (Horde)",
+        "percentage": 1.44
+      },
+      {
+        "slug": "draenei",
+        "name": "Draenei",
+        "percentage": 1.38
+      },
+      {
+        "slug": "dark-iron-dwarf",
+        "name": "Dark Iron Dwarf",
+        "percentage": 1.38
+      },
+      {
+        "slug": "gnome",
+        "name": "Gnome",
+        "percentage": 1.35
+      },
+      {
+        "slug": "haranir-alliance",
+        "name": "Haranir (Alliance)",
+        "percentage": 1.26
+      },
+      {
+        "slug": "highmountain-tauren",
+        "name": "Highmountain Tauren",
+        "percentage": 1.22
+      },
+      {
+        "slug": "pandaren-horde",
+        "name": "Pandaren (Horde)",
+        "percentage": 1.07
+      },
+      {
+        "slug": "mechagnome",
+        "name": "Mechagnome",
+        "percentage": 1.0
+      },
+      {
+        "slug": "kul-tiran",
+        "name": "Kul Tiran",
+        "percentage": 0.7
+      },
+      {
+        "slug": "earthen-horde",
+        "name": "Earthen (Horde)",
+        "percentage": 0.66
+      },
+      {
+        "slug": "pandaren-alliance",
+        "name": "Pandaren (Alliance)",
+        "percentage": 0.66
+      },
+      {
+        "slug": "lightforged-draenei",
+        "name": "Lightforged Draenei",
+        "percentage": 0.59
+      },
+      {
+        "slug": "earthen-alliance",
+        "name": "Earthen (Alliance)",
+        "percentage": 0.35
+      }
+    ],
+    "specs": [
+      {
+        "name": "Beast Mastery",
+        "percentage": 56.08
+      },
+      {
+        "name": "Marksmanship",
+        "percentage": 28.41
+      },
+      {
+        "name": "Survival",
+        "percentage": 15.51
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.4508,
+      "horde": 0.5492
+    }
+  },
+  "pvp": {
+    "races": [
+      {
+        "slug": "night-elf",
+        "name": "Night Elf",
+        "percentage": 25.55
+      },
+      {
+        "slug": "orc",
+        "name": "Orc",
+        "percentage": 21.32
+      },
+      {
+        "slug": "human",
+        "name": "Human",
+        "percentage": 9.41
+      },
+      {
+        "slug": "blood-elf",
+        "name": "Blood Elf",
+        "percentage": 6.74
+      },
+      {
+        "slug": "void-elf",
+        "name": "Void Elf",
+        "percentage": 4.61
+      },
+      {
+        "slug": "troll",
+        "name": "Troll",
+        "percentage": 4.07
+      },
+      {
+        "slug": "dwarf",
+        "name": "Dwarf",
+        "percentage": 3.83
+      },
+      {
+        "slug": "highmountain-tauren",
+        "name": "Highmountain Tauren",
+        "percentage": 2.88
+      },
+      {
+        "slug": "haranir-alliance",
+        "name": "Haranir (Alliance)",
+        "percentage": 2.09
+      },
+      {
+        "slug": "haranir-horde",
+        "name": "Haranir (Horde)",
+        "percentage": 1.97
+      },
+      {
+        "slug": "mag-har-orc",
+        "name": "Mag'har Orc",
+        "percentage": 1.82
+      },
+      {
+        "slug": "gnome",
+        "name": "Gnome",
+        "percentage": 1.69
+      },
+      {
+        "slug": "worgen",
+        "name": "Worgen",
+        "percentage": 1.28
+      },
+      {
+        "slug": "dark-iron-dwarf",
+        "name": "Dark Iron Dwarf",
+        "percentage": 1.25
+      },
+      {
+        "slug": "dracthyr-alliance",
+        "name": "Dracthyr (Alliance)",
+        "percentage": 1.2
+      },
+      {
+        "slug": "undead",
+        "name": "Undead",
+        "percentage": 1.12
+      },
+      {
+        "slug": "vulpera",
+        "name": "Vulpera",
+        "percentage": 1.09
+      },
+      {
+        "slug": "tauren",
+        "name": "Tauren",
+        "percentage": 1.06
+      },
+      {
+        "slug": "dracthyr-horde",
+        "name": "Dracthyr (Horde)",
+        "percentage": 1.06
+      },
+      {
+        "slug": "goblin",
+        "name": "Goblin",
+        "percentage": 1.05
+      },
+      {
+        "slug": "zandalari-troll",
+        "name": "Zandalari Troll",
+        "percentage": 0.92
+      },
+      {
+        "slug": "kul-tiran",
+        "name": "Kul Tiran",
+        "percentage": 0.75
+      },
+      {
+        "slug": "draenei",
+        "name": "Draenei",
+        "percentage": 0.69
+      },
+      {
+        "slug": "mechagnome",
+        "name": "Mechagnome",
+        "percentage": 0.61
+      },
+      {
+        "slug": "pandaren-alliance",
+        "name": "Pandaren (Alliance)",
+        "percentage": 0.55
+      },
+      {
+        "slug": "pandaren-horde",
+        "name": "Pandaren (Horde)",
+        "percentage": 0.53
+      },
+      {
+        "slug": "nightborne",
+        "name": "Nightborne",
+        "percentage": 0.45
+      },
+      {
+        "slug": "earthen-horde",
+        "name": "Earthen (Horde)",
+        "percentage": 0.26
+      },
+      {
+        "slug": "lightforged-draenei",
+        "name": "Lightforged Draenei",
+        "percentage": 0.1
+      },
+      {
+        "slug": "earthen-alliance",
+        "name": "Earthen (Alliance)",
+        "percentage": 0.07
+      }
+    ],
+    "specs": [
+      {
+        "name": "Beast Mastery",
+        "percentage": 45.27
+      },
+      {
+        "name": "Marksmanship",
+        "percentage": 40.71
+      },
+      {
+        "name": "Survival",
+        "percentage": 14.03
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.5367,
+      "horde": 0.4633
+    }
+  },
+  "mythic": {
+    "races": [
+      {
+        "slug": "night-elf",
+        "name": "Night Elf",
+        "percentage": 13.84
+      },
+      {
+        "slug": "blood-elf",
+        "name": "Blood Elf",
+        "percentage": 13.71
+      },
+      {
+        "slug": "orc",
+        "name": "Orc",
+        "percentage": 13.55
+      },
+      {
+        "slug": "dwarf",
+        "name": "Dwarf",
+        "percentage": 11.22
+      },
+      {
+        "slug": "human",
+        "name": "Human",
+        "percentage": 6.03
+      },
+      {
+        "slug": "void-elf",
+        "name": "Void Elf",
+        "percentage": 5.9
+      },
+      {
+        "slug": "troll",
+        "name": "Troll",
+        "percentage": 4.58
+      },
+      {
+        "slug": "tauren",
+        "name": "Tauren",
+        "percentage": 2.84
+      },
+      {
+        "slug": "haranir-horde",
+        "name": "Haranir (Horde)",
+        "percentage": 2.75
+      },
+      {
+        "slug": "haranir-alliance",
+        "name": "Haranir (Alliance)",
+        "percentage": 2.41
+      },
+      {
+        "slug": "vulpera",
+        "name": "Vulpera",
+        "percentage": 2.36
+      },
+      {
+        "slug": "worgen",
+        "name": "Worgen",
+        "percentage": 2.3
+      },
+      {
+        "slug": "mag-har-orc",
+        "name": "Mag'har Orc",
+        "percentage": 2.29
+      },
+      {
+        "slug": "dracthyr-horde",
+        "name": "Dracthyr (Horde)",
+        "percentage": 2.05
+      },
+      {
+        "slug": "dracthyr-alliance",
+        "name": "Dracthyr (Alliance)",
+        "percentage": 1.75
+      },
+      {
+        "slug": "zandalari-troll",
+        "name": "Zandalari Troll",
+        "percentage": 1.57
+      },
+      {
+        "slug": "draenei",
+        "name": "Draenei",
+        "percentage": 1.5
+      },
+      {
+        "slug": "goblin",
+        "name": "Goblin",
+        "percentage": 1.28
+      },
+      {
+        "slug": "dark-iron-dwarf",
+        "name": "Dark Iron Dwarf",
+        "percentage": 1.22
+      },
+      {
+        "slug": "gnome",
+        "name": "Gnome",
+        "percentage": 1.15
+      },
+      {
+        "slug": "pandaren-horde",
+        "name": "Pandaren (Horde)",
+        "percentage": 1.02
+      },
+      {
+        "slug": "undead",
+        "name": "Undead",
+        "percentage": 0.83
+      },
+      {
+        "slug": "pandaren-alliance",
+        "name": "Pandaren (Alliance)",
+        "percentage": 0.7
+      },
+      {
+        "slug": "mechagnome",
+        "name": "Mechagnome",
+        "percentage": 0.69
+      },
+      {
+        "slug": "nightborne",
+        "name": "Nightborne",
+        "percentage": 0.68
+      },
+      {
+        "slug": "highmountain-tauren",
+        "name": "Highmountain Tauren",
+        "percentage": 0.62
+      },
+      {
+        "slug": "lightforged-draenei",
+        "name": "Lightforged Draenei",
+        "percentage": 0.45
+      },
+      {
+        "slug": "kul-tiran",
+        "name": "Kul Tiran",
+        "percentage": 0.37
+      },
+      {
+        "slug": "earthen-horde",
+        "name": "Earthen (Horde)",
+        "percentage": 0.28
+      },
+      {
+        "slug": "earthen-alliance",
+        "name": "Earthen (Alliance)",
+        "percentage": 0.07
+      }
+    ],
+    "specs": [
+      {
+        "name": "Beast Mastery",
+        "percentage": 52.63
+      },
+      {
+        "name": "Marksmanship",
+        "percentage": 27.34
+      },
+      {
+        "name": "Survival",
+        "percentage": 20.04
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.4959,
+      "horde": 0.5041
+    }
+  }
+}

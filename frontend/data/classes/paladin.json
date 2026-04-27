@@ -1,0 +1,226 @@
+{
+  "slug": "paladin",
+  "name": "Paladin",
+  "lastUpdated": "2026-04-18T00:00:00Z",
+  "general": {
+    "races": [
+      {
+        "slug": "blood-elf",
+        "name": "Blood Elf",
+        "percentage": 36.35
+      },
+      {
+        "slug": "human",
+        "name": "Human",
+        "percentage": 23.79
+      },
+      {
+        "slug": "tauren",
+        "name": "Tauren",
+        "percentage": 8.46
+      },
+      {
+        "slug": "lightforged-draenei",
+        "name": "Lightforged Draenei",
+        "percentage": 7.37
+      },
+      {
+        "slug": "dwarf",
+        "name": "Dwarf",
+        "percentage": 7.12
+      },
+      {
+        "slug": "zandalari-troll",
+        "name": "Zandalari Troll",
+        "percentage": 5.49
+      },
+      {
+        "slug": "dark-iron-dwarf",
+        "name": "Dark Iron Dwarf",
+        "percentage": 4.06
+      },
+      {
+        "slug": "draenei",
+        "name": "Draenei",
+        "percentage": 3.74
+      },
+      {
+        "slug": "earthen-horde",
+        "name": "Earthen (Horde)",
+        "percentage": 2.6
+      },
+      {
+        "slug": "earthen-alliance",
+        "name": "Earthen (Alliance)",
+        "percentage": 1.01
+      }
+    ],
+    "specs": [
+      {
+        "name": "Retribution",
+        "percentage": 52.64
+      },
+      {
+        "name": "Protection",
+        "percentage": 24.07
+      },
+      {
+        "name": "Holy",
+        "percentage": 23.29
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.4709,
+      "horde": 0.5291
+    }
+  },
+  "pvp": {
+    "races": [
+      {
+        "slug": "human",
+        "name": "Human",
+        "percentage": 45.03
+      },
+      {
+        "slug": "blood-elf",
+        "name": "Blood Elf",
+        "percentage": 27.76
+      },
+      {
+        "slug": "tauren",
+        "name": "Tauren",
+        "percentage": 7.83
+      },
+      {
+        "slug": "dark-iron-dwarf",
+        "name": "Dark Iron Dwarf",
+        "percentage": 5.15
+      },
+      {
+        "slug": "dwarf",
+        "name": "Dwarf",
+        "percentage": 4.35
+      },
+      {
+        "slug": "zandalari-troll",
+        "name": "Zandalari Troll",
+        "percentage": 3.04
+      },
+      {
+        "slug": "lightforged-draenei",
+        "name": "Lightforged Draenei",
+        "percentage": 2.91
+      },
+      {
+        "slug": "draenei",
+        "name": "Draenei",
+        "percentage": 2.75
+      },
+      {
+        "slug": "earthen-horde",
+        "name": "Earthen (Horde)",
+        "percentage": 0.82
+      },
+      {
+        "slug": "earthen-alliance",
+        "name": "Earthen (Alliance)",
+        "percentage": 0.37
+      }
+    ],
+    "specs": [
+      {
+        "name": "Retribution",
+        "percentage": 60.16
+      },
+      {
+        "name": "Holy",
+        "percentage": 28.44
+      },
+      {
+        "name": "Protection",
+        "percentage": 11.4
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.6055,
+      "horde": 0.3945
+    }
+  },
+  "mythic": {
+    "races": [
+      {
+        "slug": "blood-elf",
+        "name": "Blood Elf",
+        "percentage": 39.1
+      },
+      {
+        "slug": "human",
+        "name": "Human",
+        "percentage": 27.32
+      },
+      {
+        "slug": "dwarf",
+        "name": "Dwarf",
+        "percentage": 8.6
+      },
+      {
+        "slug": "tauren",
+        "name": "Tauren",
+        "percentage": 7.17
+      },
+      {
+        "slug": "lightforged-draenei",
+        "name": "Lightforged Draenei",
+        "percentage": 5.23
+      },
+      {
+        "slug": "zandalari-troll",
+        "name": "Zandalari Troll",
+        "percentage": 3.89
+      },
+      {
+        "slug": "dark-iron-dwarf",
+        "name": "Dark Iron Dwarf",
+        "percentage": 3.58
+      },
+      {
+        "slug": "draenei",
+        "name": "Draenei",
+        "percentage": 3.2
+      },
+      {
+        "slug": "earthen-horde",
+        "name": "Earthen (Horde)",
+        "percentage": 1.33
+      },
+      {
+        "slug": "earthen-alliance",
+        "name": "Earthen (Alliance)",
+        "percentage": 0.57
+      },
+      {
+        "slug": "void-elf",
+        "name": "Void Elf",
+        "percentage": 0.0
+      }
+    ],
+    "specs": [
+      {
+        "name": "Retribution",
+        "percentage": 46.61
+      },
+      {
+        "name": "Protection",
+        "percentage": 29.13
+      },
+      {
+        "name": "Holy",
+        "percentage": 24.26
+      }
+    ],
+    "factionSplit": {
+      "alliance": 0.485,
+      "horde": 0.515
+    }
+  }
+}
