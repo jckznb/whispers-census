@@ -4,7 +4,7 @@
 WoW retail character demographics visualization app tracking race/class popularity across PvP, M+, and general population. Hobby project targeting altaholics/theorycrafters. All three data contexts are live.
 
 **Domain:** whisperscensus.com (live and deployed)
-**Deploy:** `npx vercel --prod` from `frontend/` — NOT connected to GitHub auto-deploy
+**Deploy:** `git push origin master` — GitHub auto-deploys to Vercel (connected 2026-04-26)
 
 ## Tech Stack
 - **Framework**: Next.js 16.2.4 / React 19.2.4, App Router, `output: 'export'` (static site)
@@ -72,7 +72,7 @@ Blizzard API → crawler → Supabase → blob export → homepage (runtime fetc
 - **Homepage** fetches `demographics.json` at runtime via `useDemographics.js` (`NEXT_PUBLIC_DEMOGRAPHICS_URL`)
 - **SEO pages** (`/monk`, `/night-elf`, etc.) read committed JSON files at build time — no runtime fetch
 - **`app/[slug]/page.js`** tries `data/classes/{slug}.json` first, then `data/races/{slug}.json`
-- Blob JSON shape: `{ updated, pvp: { total, combos, specs, spec_combos }, pve: {...}, general: {...} }`
+- Blob JSON shape: `{ updated, general: { total, combos, specs, spec_combos }, rp: {...}, pvp: {...}, pve: {...} }` — 4 contexts; `rp` = RP realms only (Moon Guard / Wyrmrest Accord / Emerald Dream)
 
 ### Credential / Secret Files
 - Root `.env` — `BLIZZARD_CLIENT_ID`, `BLIZZARD_CLIENT_SECRET`, `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `BLOB_READ_WRITE_TOKEN`
