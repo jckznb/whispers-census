@@ -88,55 +88,64 @@ export const MythicClassTemplate = forwardRef(function MythicClassTemplate(
         }}
       >
         {/* Header */}
-        <div style={{ marginBottom: 20 }}>
-          <div style={{
-            fontSize: 11, fontWeight: 600, letterSpacing: '0.14em',
-            color: ACCENT, textTransform: 'uppercase', marginBottom: 6,
-          }}>
-            Whispers Census · Mythic+
-          </div>
-          <div style={{
-            fontSize: 24, fontWeight: 700, color: TEXT_HI, letterSpacing: '0.02em',
-            marginBottom: 4,
-          }}>
-            Class Distribution
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+          <img src="/logo.png" alt="" width={36} height={36}
+            style={{ borderRadius: 6, flexShrink: 0 }} />
+          <div>
+            <div style={{
+              fontSize: 11, fontWeight: 600, letterSpacing: '0.14em',
+              color: ACCENT, textTransform: 'uppercase', marginBottom: 3,
+            }}>
+              Whispers Census · Mythic+
+            </div>
+            <div style={{
+              fontSize: 22, fontWeight: 700, color: TEXT_HI, letterSpacing: '0.02em',
+              lineHeight: 1.1,
+            }}>
+              Class Distribution
+            </div>
           </div>
           {total > 0 && (
-            <div style={{ fontSize: 12, color: TEXT_MID }}>
-              {total.toLocaleString()} characters · US Servers
+            <div style={{ marginLeft: 'auto', fontSize: 11, color: TEXT_MID, textAlign: 'right', flexShrink: 0 }}>
+              {total.toLocaleString()}<br />
+              <span style={{ color: TEXT_DIM }}>characters</span>
             </div>
           )}
         </div>
 
-        {/* Donut — centered */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20 }}>
-          <svg viewBox="0 0 140 140" width="160" height="160"
-            style={{ transform: 'rotate(-90deg)', display: 'block' }}>
-            <circle cx="70" cy="70" r={R} fill="none" stroke="#1a0a30" strokeWidth="20" />
-            {segments.map(s => (
-              <DonutSegment key={s.name} pct={s.pct} color={s.color} cumulativePct={s.cumulativePct} />
-            ))}
-          </svg>
-        </div>
+        {/* Donut + Legend — side by side */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 24, flex: 1 }}>
+          {/* Donut */}
+          <div style={{ flexShrink: 0 }}>
+            <svg viewBox="0 0 140 140" width="200" height="200"
+              style={{ transform: 'rotate(-90deg)', display: 'block' }}>
+              <circle cx="70" cy="70" r={R} fill="none" stroke="#1a0a30" strokeWidth="20" />
+              {segments.map(s => (
+                <DonutSegment key={s.name} pct={s.pct} color={s.color} cumulativePct={s.cumulativePct} />
+              ))}
+            </svg>
+          </div>
 
-        {/* Legend — 2 columns */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '6px 24px',
-          flex: 1,
-        }}>
-          {sorted.map(({ name, pct, color }) => (
-            <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-              <div style={{ width: 9, height: 9, borderRadius: '50%', background: color, flexShrink: 0 }} />
-              <span style={{ fontSize: 12, color: TEXT_HI, flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                {name}
-              </span>
-              <span style={{ fontSize: 12, color: TEXT_MID, flexShrink: 0, marginLeft: 4 }}>
-                {pct.toFixed(1)}%
-              </span>
-            </div>
-          ))}
+          {/* Legend */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '8px 16px',
+            flex: 1,
+            alignContent: 'center',
+          }}>
+            {sorted.map(({ name, pct, color }) => (
+              <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                <div style={{ width: 9, height: 9, borderRadius: '50%', background: color, flexShrink: 0 }} />
+                <span style={{ fontSize: 13, color: TEXT_HI, flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {name}
+                </span>
+                <span style={{ fontSize: 13, color: TEXT_MID, flexShrink: 0, marginLeft: 4 }}>
+                  {pct.toFixed(1)}%
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Footer */}
@@ -146,7 +155,7 @@ export const MythicClassTemplate = forwardRef(function MythicClassTemplate(
           borderTop: `1px solid ${TEXT_DIM}`,
         }}>
           <span style={{ fontSize: 12, color: TEXT_MID, letterSpacing: '0.08em' }}>
-            whisperscensus.app
+            whisperscensus.com
           </span>
           {date && (
             <span style={{ fontSize: 11, color: TEXT_DIM }}>Updated {date}</span>
