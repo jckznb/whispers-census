@@ -106,8 +106,25 @@ function GeneralTeaser({ blob }) {
 }
 
 function MythicTeaser({ blob }) {
-  const specs = blob?.pve?.specs ?? []
-  const total = (blob?.pve?.combos ?? []).reduce((s, c) => s + c.count, 0)
+  const specs  = blob?.pve?.specs  ?? []
+  const combos = blob?.pve?.combos ?? []
+  const total  = combos.reduce((s, c) => s + c.count, 0)
+
+  // Top spec per role
+  const topByRole = ['tank', 'healer', 'damage'].map(role => {
+    const top = [...specs].filter(s => s.role === role).sort((a, b) => b.count - a.count)[0]
+    return top ? { role, ...top } : null
+  }).filter(Boolean)
+
+  // Top 3 races from combos
+  const raceTotals = {}
+  combos.forEach(c => { raceTotals[c.race] = (raceTotals[c.race] ?? 0) + c.count })
+  const topRaces = Object.entries(raceTotals)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([race, count]) => ({ race, pct: total > 0 ? (count / total) * 100 : 0 }))
+
+  const roleLabel = { tank: 'Tank', healer: 'Healer', damage: 'DPS' }
 
   return (
     <div className="card p-5 flex flex-col gap-5">
@@ -118,21 +135,38 @@ function MythicTeaser({ blob }) {
         </p>
       </div>
 
-      {specs.length === 0 ? <Skeleton /> : <RoleBar specs={specs} />}
+      {specs.length === 0 ? <Skeleton /> : (
+        <>
+          {/* Top spec per role */}
+          <div className="space-y-2">
+            {topByRole.map(s => (
+              <MiniBar
+                key={s.role}
+                label={s.spec}
+                sublabel={`${s.class} · ${roleLabel[s.role]}`}
+                pct={s.pct}
+                maxPct={topByRole[0]?.pct ?? 1}
+                color={ROLE_COLORS[s.role]}
+              />
+            ))}
+          </div>
 
-      {specs.length > 0 && (
-        <div className="space-y-2">
-          {[...specs].sort((a, b) => b.count - a.count).slice(0, 3).map(s => (
-            <MiniBar
-              key={`${s.class}-${s.spec}`}
-              label={s.spec}
-              sublabel={s.class}
-              pct={s.pct}
-              maxPct={specs[0]?.pct ?? 1}
-              color={CLASS_COLORS[s.class] ?? '#9b6dff'}
-            />
-          ))}
-        </div>
+          {/* Top 3 races */}
+          {topRaces.length > 0 && (
+            <div className="space-y-2">
+              <p className="text-void-600 text-xs uppercase tracking-wider font-semibold">Top Races</p>
+              {topRaces.map(({ race, pct }) => (
+                <MiniBar
+                  key={race}
+                  label={race}
+                  pct={pct}
+                  maxPct={topRaces[0]?.pct ?? 1}
+                  color="#9b6dff"
+                />
+              ))}
+            </div>
+          )}
+        </>
       )}
 
       <Link href="/mythic"
