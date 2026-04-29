@@ -1,28 +1,12 @@
 import { SiteHeader } from '@/components/SiteHeader'
+import { SiteFooter } from '@/components/SiteFooter'
 
 export default function SlugLayout({ children }) {
   return (
     <>
       <SiteHeader />
       <main className="flex-1">{children}</main>
-      <footer className="border-t border-void-800/60 py-6 mt-8">
-        <div className="max-w-3xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-void-600">
-          <a href="/" className="hover:text-void-400 transition-colors font-display tracking-wide">
-            Whispers Census
-          </a>
-          <div className="flex items-center gap-4">
-            <a href="/about" className="hover:text-void-400 transition-colors">About</a>
-            <a
-              href="https://ko-fi.com/whisperscensus"
-              className="hover:text-void-400 transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Support on Ko-fi
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   )
 }

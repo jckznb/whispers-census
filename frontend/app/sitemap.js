@@ -14,10 +14,34 @@ export default function sitemap() {
 
   return [
     {
-      url:            BASE_URL,
-      lastModified:   now,
+      url:             BASE_URL,
+      lastModified:    now,
       changeFrequency: 'daily',
-      priority:       1.0,
+      priority:        1.0,
+    },
+    {
+      url:             `${BASE_URL}/general`,
+      lastModified:    now,
+      changeFrequency: 'daily',
+      priority:        0.9,
+    },
+    {
+      url:             `${BASE_URL}/mythic`,
+      lastModified:    now,
+      changeFrequency: 'weekly',
+      priority:        0.9,
+    },
+    {
+      url:             `${BASE_URL}/pvp`,
+      lastModified:    now,
+      changeFrequency: 'weekly',
+      priority:        0.9,
+    },
+    {
+      url:             `${BASE_URL}/about`,
+      lastModified:    now,
+      changeFrequency: 'monthly',
+      priority:        0.4,
     },
     ...classFiles.map(f => ({
       url:             `${BASE_URL}/${f.slice(0, -5)}`,

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { CLASS_NAV, RACE_NAV } from '@/utils/seo-nav'
 
 function NavDropdown({ label, children }) {
@@ -83,18 +84,44 @@ function RaceDropdownContent() {
   )
 }
 
+const SECTION_NAV = [
+  { href: '/general', label: 'General' },
+  { href: '/mythic',  label: 'Mythic+' },
+  { href: '/pvp',     label: 'PvP'     },
+]
+
 export function SiteHeader() {
+  const pathname = usePathname()
+
   return (
     <header className="border-b border-void-700/40 bg-void-900/80 backdrop-blur-md sticky top-0 z-20">
-      <div className="max-w-5xl mx-auto px-4 py-2.5 flex items-center gap-4">
-        <Link href="/" className="flex items-center gap-2.5 shrink-0">
+      <div className="max-w-5xl mx-auto px-4 py-2.5 flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2.5 shrink-0 mr-2">
           <img src="/logo.png" alt="Whispers Census" className="w-8 h-8 rounded-sm" />
           <span className="font-display font-semibold text-void-100 tracking-wide hidden sm:block">
             Whispers Census
           </span>
         </Link>
 
+        {/* Primary section nav */}
         <nav className="flex items-center gap-0.5">
+          {SECTION_NAV.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                pathname === href
+                  ? 'bg-yogg-purple/30 text-void-100'
+                  : 'text-void-300 hover:text-void-100 hover:bg-void-700/40'
+              }`}
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Class/Race dropdowns — hidden on small screens */}
+        <nav className="hidden sm:flex items-center gap-0.5 ml-1 pl-2 border-l border-void-700/40">
           <NavDropdown label="Classes">
             <ClassDropdownContent />
           </NavDropdown>
@@ -102,10 +129,6 @@ export function SiteHeader() {
             <RaceDropdownContent />
           </NavDropdown>
         </nav>
-
-        <Link href="/" className="ml-auto text-xs text-void-500 hover:text-void-300 transition-colors">
-          ← Back to Census
-        </Link>
       </div>
     </header>
   )

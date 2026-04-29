@@ -50,7 +50,7 @@ function DisambiguationPage({ data }) {
       <nav className="text-sm text-void-500 flex items-center gap-1.5">
         <Link href="/" className="hover:text-void-300 transition-colors">Home</Link>
         <span>/</span>
-        <Link href="/#browse-races" className="hover:text-void-300 transition-colors">Races</Link>
+        <Link href="/general#browse-races" className="hover:text-void-300 transition-colors">Races</Link>
         <span>/</span>
         <span className="text-void-200">{name}</span>
       </nav>
@@ -153,13 +153,13 @@ export function RacePageClient({ data }) {
   const breadcrumbs = isNeutral
     ? [
         { label: 'Home',  href: '/' },
-        { label: 'Races', href: '/#browse-races' },
+        { label: 'Races', href: '/general#browse-races' },
         { label: data.name.split('(')[0].trim(), href: `/${data.baseRace}` },
         { label: data.name },
       ]
     : [
         { label: 'Home',  href: '/' },
-        { label: 'Races', href: '/#browse-races' },
+        { label: 'Races', href: '/general#browse-races' },
         { label: data.name },
       ]
 

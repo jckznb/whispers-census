@@ -5,7 +5,6 @@ import { ContextSelector } from '@/components/ContextSelector'
 import { PopularityBars } from '@/components/PopularityBars'
 import { RaceClassHeatmap } from '@/components/RaceClassHeatmap'
 import { ComboExplorer } from '@/components/ComboExplorer'
-import { ProfessionBars } from '@/components/ProfessionBars'
 import { AltPicker } from '@/components/AltPicker/AltPicker'
 import { useDemographics, useRawBlob } from '@/hooks/useDemographics'
 import { ComboHighlights } from '@/components/ComboHighlights'
@@ -14,7 +13,6 @@ function LoadingOverlay() {
   return (
     <div className="flex items-center justify-center py-16">
       <div className="flex flex-col items-center gap-3">
-        {/* Yogg-Saron eye pulse */}
         <div className="relative">
           <div className="w-12 h-12 rounded-full bg-yogg-purple/20 animate-ping absolute inset-0" />
           <div className="w-12 h-12 rounded-full bg-yogg-void border-2 border-yogg-purple/50 flex items-center justify-center relative">
@@ -46,52 +44,36 @@ export function CensusApp({ children }) {
   const [context,  setContext]  = useState('general')
   const [barsView, setBarsView] = useState('class')
 
-  const { data, specData, specCombos, professionData, loading, error, snapshotDate } = useDemographics(context)
+  const { data, specData, specCombos, loading, error, snapshotDate } = useDemographics(context)
   const { blob, loading: blobLoading } = useRawBlob()
 
   return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <header className="border-b border-void-700/40 bg-void-900/80 backdrop-blur-md sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="Whispers Census logo" className="w-9 h-9 rounded-sm shrink-0" />
-            <div>
-              <h1 className="font-display text-xl font-semibold text-void-50 glow-eye tracking-wider">
-                Whispers Census
-              </h1>
-              <p className="text-void-500 text-xs hidden sm:block">
-                The whispers reveal what Azeroth is playing
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            {/* Tab switcher */}
-            <nav className="flex gap-1 bg-void-800/60 border border-void-600/30 rounded-lg p-1">
-              {TABS.map(t => (
-                <button
-                  key={t.id}
-                  onClick={() => setTab(t.id)}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                    tab === t.id
-                      ? 'bg-yogg-purple/80 text-white'
-                      : 'text-void-400 hover:text-void-200'
-                  }`}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </nav>
-            {snapshotDate && (
-              <span className="text-void-500 text-xs shrink-0 hidden sm:block">
-                Snapshot: {snapshotDate}
-              </span>
-            )}
-          </div>
-        </div>
-      </header>
-
+    <>
       <main className="max-w-7xl mx-auto px-4 py-6 space-y-6">
+
+        {/* Tab switcher + snapshot date */}
+        <div className="flex items-center justify-between gap-4">
+          <nav className="flex gap-1 bg-void-800/60 border border-void-600/30 rounded-lg p-1">
+            {TABS.map(t => (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  tab === t.id
+                    ? 'bg-yogg-purple/80 text-white'
+                    : 'text-void-400 hover:text-void-200'
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </nav>
+          {snapshotDate && (
+            <span className="text-void-500 text-xs hidden sm:block">
+              Snapshot: {snapshotDate}
+            </span>
+          )}
+        </div>
 
         {/* ── Alt Picker tab ─────────────────────────────────────────── */}
         {tab === 'altpicker' && (
@@ -114,10 +96,8 @@ export function CensusApp({ children }) {
         {/* ── Census tab ─────────────────────────────────────────────── */}
         {tab === 'census' && (
           <>
-            {/* Top / bottom combos — always general population */}
             <ComboHighlights blob={blob} />
 
-            {/* Context selector */}
             <div className="card p-4">
               <ContextSelector context={context} onChange={setContext} />
             </div>
@@ -142,7 +122,6 @@ export function CensusApp({ children }) {
               </div>
             ) : (
               <>
-                {/* Heatmap */}
                 <Section title="Race × Class Heatmap">
                   <p className="text-void-500 text-xs mb-4">
                     Color intensity = relative popularity. Click a cell for details. Gray = invalid combo.
@@ -150,7 +129,6 @@ export function CensusApp({ children }) {
                   <RaceClassHeatmap data={data} specCombos={specCombos} />
                 </Section>
 
-                {/* Popularity bars */}
                 <Section title="Popularity Rankings">
                   <div className="flex gap-2 mb-4">
                     {[
@@ -180,59 +158,20 @@ export function CensusApp({ children }) {
                   />
                 </Section>
 
-                {/* Combo explorer */}
                 <Section title="Combo Explorer">
                   <p className="text-void-500 text-xs mb-4">
                     Pick a race or class to see what else people pair it with.
                   </p>
                   <ComboExplorer data={data} />
                 </Section>
-
-                {/* Profession distribution — commented out until profession UI is redesigned
-                <Section title="Professions">
-                  <p className="text-void-500 text-xs mb-4">
-                    Primary profession popularity among players in this dataset.
-                  </p>
-                  <ProfessionBars data={professionData} />
-                </Section>
-                */}
               </>
             )}
           </>
         )}
       </main>
 
-      {/* Extra content slot (e.g. browse grids from page.js) */}
+      {/* Extra content slot (browse grids from page.js) */}
       {children}
-
-      {/* Footer */}
-      <footer className="border-t border-void-800/40 mt-12">
-        <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-void-600 text-xs">
-          <span>
-            Data provided by{' '}
-            <a
-              href="https://develop.battle.net"
-              className="text-void-400 hover:text-void-200 underline underline-offset-2"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Blizzard Entertainment
-            </a>
-            . Whispers Census is not affiliated with Blizzard Entertainment.
-          </span>
-          <div className="flex items-center gap-4">
-            <a href="/about" className="hover:text-void-400 transition-colors">About</a>
-            <a
-              href="https://ko-fi.com/whisperscensus"
-              className="hover:text-void-400 transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Support on Ko-fi
-            </a>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </>
   )
 }

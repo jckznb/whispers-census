@@ -64,7 +64,7 @@ export function ClassPageClient({ data, icon }) {
       <nav className="text-sm text-void-500 flex items-center gap-1.5">
         <Link href="/" className="hover:text-void-300 transition-colors">Home</Link>
         <span>/</span>
-        <Link href="/#browse-classes" className="hover:text-void-300 transition-colors">Classes</Link>
+        <Link href="/general#browse-classes" className="hover:text-void-300 transition-colors">Classes</Link>
         <span>/</span>
         <span className="text-void-200">{data.name}</span>
       </nav>
