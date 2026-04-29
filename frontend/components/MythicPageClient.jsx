@@ -1,7 +1,7 @@
 'use client'
 
 import { useRawBlob } from '@/hooks/useDemographics'
-import { RoleDonut } from '@/components/RoleDonut'
+import { ClassDonut } from '@/components/ClassDonut'
 import { SpecRankings } from '@/components/SpecRankings'
 
 function LoadingOverlay() {
@@ -51,17 +51,17 @@ export function MythicPageClient() {
         </p>
       </div>
 
-      {/* Role split */}
+      {/* Class distribution */}
       <section className="card p-6">
-        <h2 className="section-title mb-5">Role Distribution</h2>
-        <RoleDonut specs={specs} />
+        <h2 className="section-title mb-5">Class Distribution</h2>
+        <ClassDonut specs={specs} />
       </section>
 
       {/* Spec rankings */}
       <section className="card p-6">
         <h2 className="section-title mb-1">Spec Popularity</h2>
         <p className="text-void-500 text-xs mb-5">
-          Percentage of all tracked M+ characters. Filter by role to compare within a role.
+          Filter by role to see how each spec ranks within tanks, healers, or DPS.
         </p>
         <SpecRankings specs={specs} />
       </section>
