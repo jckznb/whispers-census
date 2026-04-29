@@ -17,6 +17,13 @@ const inter = Inter({
 })
 
 export const metadata = {
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico' },
+    ],
+  },
   title: 'Whispers Census — WoW Character Demographics',
   description:
     'See what races and classes real WoW players are choosing. Population data from US PvP leaderboards, Mythic+ runs, and 1.6M+ guild roster characters.',

@@ -1,6 +1,6 @@
 import { SiteHeader } from '@/components/SiteHeader'
 
-export default function SlugLayout({ children }) {
+export default function AboutLayout({ children }) {
   return (
     <>
       <SiteHeader />
@@ -11,7 +11,6 @@ export default function SlugLayout({ children }) {
             Whispers Census
           </a>
           <div className="flex items-center gap-4">
-            <a href="/about" className="hover:text-void-400 transition-colors">About</a>
             <a
               href="https://ko-fi.com/whisperscensus"
               className="hover:text-void-400 transition-colors"

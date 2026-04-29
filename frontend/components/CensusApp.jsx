@@ -37,8 +37,8 @@ function Section({ title, children }) {
 }
 
 const TABS = [
-  { id: 'census',    label: 'Census',     icon: '📊' },
-  { id: 'altpicker', label: 'Alt Picker', icon: '🎲' },
+  { id: 'census',    label: 'Census'     },
+  { id: 'altpicker', label: 'Alt Picker' },
 ]
 
 export function CensusApp({ children }) {
@@ -78,7 +78,6 @@ export function CensusApp({ children }) {
                       : 'text-void-400 hover:text-void-200'
                   }`}
                 >
-                  <span className="mr-1.5">{t.icon}</span>
                   {t.label}
                 </button>
               ))}
@@ -221,7 +220,17 @@ export function CensusApp({ children }) {
             </a>
             . Whispers Census is not affiliated with Blizzard Entertainment.
           </span>
-          <span>whisperscensus.app</span>
+          <div className="flex items-center gap-4">
+            <a href="/about" className="hover:text-void-400 transition-colors">About</a>
+            <a
+              href="https://ko-fi.com/whisperscensus"
+              className="hover:text-void-400 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Support on Ko-fi
+            </a>
+          </div>
         </div>
       </footer>
     </div>

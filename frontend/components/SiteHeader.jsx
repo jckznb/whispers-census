@@ -31,7 +31,7 @@ function NavDropdown({ label, children }) {
       </button>
 
       {open && (
-        <div className="absolute top-full left-0 mt-1 z-50 min-w-[220px] card shadow-xl shadow-black/50
+        <div className="absolute top-full left-0 mt-1 z-50 min-w-[220px] card bg-void-800 shadow-xl shadow-black/50
                         p-3 animate-in fade-in slide-in-from-top-1 duration-150">
           {children}
         </div>
