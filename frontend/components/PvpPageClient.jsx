@@ -1,7 +1,7 @@
 'use client'
 
 import { useRawBlob } from '@/hooks/useDemographics'
-import { ClassDonut } from '@/components/ClassDonut'
+import { ClassBars } from '@/components/ClassBars'
 import { SpecRankings } from '@/components/SpecRankings'
 
 function LoadingOverlay() {
@@ -54,7 +54,7 @@ export function PvpPageClient() {
       {/* Class distribution */}
       <section className="card p-6">
         <h2 className="section-title mb-5">Class Distribution</h2>
-        <ClassDonut specs={specs} />
+        <ClassBars specs={specs} />
       </section>
 
       {/* Spec rankings */}

@@ -3,29 +3,37 @@
 import { forwardRef } from 'react'
 import { CLASS_COLORS } from '@/utils/constants'
 
-// Mirrors: ClassDonut in MythicPageClient
+// Mirrors: ClassBars in MythicPageClient
 // Renders at 540×540 DOM px → captured at 1080×1080 (pixelRatio:2)
-// Outer wrapper clips it to 0×0; inner div is a plain block for reliable html-to-image capture.
-// If ClassDonut or its data source changes, update this template too.
+// Uses inline SVG icon — no external image loading required by html-to-image.
 
-const BG      = '#0d0518'
-const TEXT_HI = '#e8deff'
+const BG       = '#0d0518'
+const TEXT_HI  = '#e8deff'
 const TEXT_MID = '#9b6dff'
 const TEXT_DIM = '#3d1a6e'
 const ACCENT   = '#9b4cc4'
 
-const R    = 48
-const CIRC = 2 * Math.PI * R
+function EyeIcon() {
+  return (
+    <svg width="36" height="36" viewBox="0 0 36 36" style={{ flexShrink: 0 }}>
+      <circle cx="18" cy="18" r="17" fill="#1a0a30" />
+      <circle cx="18" cy="18" r="11" fill="#2d1155" />
+      <circle cx="18" cy="18" r="6"  fill={ACCENT} />
+      <circle cx="18" cy="18" r="3"  fill="#c084fc" />
+      <circle cx="20" cy="16" r="1.4" fill={TEXT_HI} style={{ opacity: 0.5 }} />
+    </svg>
+  )
+}
 
-function buildSegments(specs) {
+function buildBars(specs) {
   const totals = {}
   ;(specs || []).forEach(s => {
     if (s.class) totals[s.class] = (totals[s.class] ?? 0) + s.count
   })
   const total = Object.values(totals).reduce((a, b) => a + b, 0)
-  if (total === 0) return { segments: [], sorted: [] }
+  if (total === 0) return { bars: [], total: 0 }
 
-  const sorted = Object.entries(totals)
+  const bars = Object.entries(totals)
     .sort((a, b) => b[1] - a[1])
     .map(([name, count]) => ({
       name,
@@ -33,49 +41,27 @@ function buildSegments(specs) {
       color: CLASS_COLORS[name] ?? '#9b6dff',
     }))
 
-  let cumulative = 0
-  const segments = sorted.map(s => {
-    const seg = { ...s, cumulativePct: cumulative }
-    cumulative += s.pct
-    return seg
-  })
-
-  return { segments, sorted }
-}
-
-function DonutSegment({ pct, color, cumulativePct }) {
-  const segLen  = (pct / 100) * CIRC
-  const gap     = Math.min(2.5, segLen * 0.08)
-  const visible = Math.max(0, segLen - gap)
-  const offset  = CIRC * 0.25 - (cumulativePct / 100) * CIRC
-  return (
-    <circle cx="70" cy="70" r={R} fill="none"
-      stroke={color} strokeWidth="20"
-      strokeDasharray={`${visible} ${CIRC - visible}`}
-      strokeDashoffset={offset}
-    />
-  )
+  return { bars, total }
 }
 
 export const MythicClassTemplate = forwardRef(function MythicClassTemplate(
   { specs, total, updatedDate },
   ref
 ) {
-  const { segments, sorted } = buildSegments(specs)
+  const { bars } = buildBars(specs)
+  const maxPct = bars[0]?.pct ?? 1
 
   const date = updatedDate
     ? new Date(updatedDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
     : ''
 
   return (
-    // Outer: fixed 0×0 overflow-hidden so it doesn't affect page layout
     <div style={{
       position: 'fixed', top: 0, left: 0,
       width: 0, height: 0,
       overflow: 'hidden',
       pointerEvents: 'none',
     }}>
-      {/* Inner: plain block element — no special positioning, reliable for html-to-image */}
       <div
         ref={ref}
         style={{
@@ -83,82 +69,75 @@ export const MythicClassTemplate = forwardRef(function MythicClassTemplate(
           background: BG,
           display: 'flex',
           flexDirection: 'column',
-          padding: '32px 32px 24px',
+          padding: '28px 32px 20px',
           boxSizing: 'border-box',
         }}
       >
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-          <img src="/logo.png" alt="" width={36} height={36}
-            style={{ borderRadius: 6, flexShrink: 0 }} />
-          <div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
+          <EyeIcon />
+          <div style={{ flex: 1 }}>
             <div style={{
-              fontSize: 11, fontWeight: 600, letterSpacing: '0.14em',
+              fontSize: 10, fontWeight: 600, letterSpacing: '0.14em',
               color: ACCENT, textTransform: 'uppercase', marginBottom: 3,
             }}>
               Whispers Census · Mythic+
             </div>
-            <div style={{
-              fontSize: 22, fontWeight: 700, color: TEXT_HI, letterSpacing: '0.02em',
-              lineHeight: 1.1,
-            }}>
+            <div style={{ fontSize: 22, fontWeight: 700, color: TEXT_HI, lineHeight: 1.1 }}>
               Class Distribution
             </div>
           </div>
           {total > 0 && (
-            <div style={{ marginLeft: 'auto', fontSize: 11, color: TEXT_MID, textAlign: 'right', flexShrink: 0 }}>
+            <div style={{ fontSize: 11, color: TEXT_MID, textAlign: 'right', flexShrink: 0 }}>
               {total.toLocaleString()}<br />
-              <span style={{ color: TEXT_DIM }}>characters</span>
+              <span style={{ color: TEXT_DIM, fontSize: 10 }}>characters · US</span>
             </div>
           )}
         </div>
 
-        {/* Donut + Legend — side by side */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 24, flex: 1 }}>
-          {/* Donut */}
-          <div style={{ flexShrink: 0 }}>
-            <svg viewBox="0 0 140 140" width="200" height="200"
-              style={{ transform: 'rotate(-90deg)', display: 'block' }}>
-              <circle cx="70" cy="70" r={R} fill="none" stroke="#1a0a30" strokeWidth="20" />
-              {segments.map(s => (
-                <DonutSegment key={s.name} pct={s.pct} color={s.color} cumulativePct={s.cumulativePct} />
-              ))}
-            </svg>
-          </div>
-
-          {/* Legend */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '8px 16px',
-            flex: 1,
-            alignContent: 'center',
-          }}>
-            {sorted.map(({ name, pct, color }) => (
-              <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-                <div style={{ width: 9, height: 9, borderRadius: '50%', background: color, flexShrink: 0 }} />
-                <span style={{ fontSize: 13, color: TEXT_HI, flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {name}
-                </span>
-                <span style={{ fontSize: 13, color: TEXT_MID, flexShrink: 0, marginLeft: 4 }}>
-                  {pct.toFixed(1)}%
-                </span>
+        {/* Bar chart */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          {bars.map(({ name, pct, color }) => (
+            <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{
+                fontSize: 11, color: TEXT_HI,
+                width: 100, flexShrink: 0,
+                whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+              }}>
+                {name}
+              </span>
+              <div style={{
+                flex: 1, height: 12, borderRadius: 3,
+                background: '#1a0a30', overflow: 'hidden',
+              }}>
+                <div style={{
+                  width: `${(pct / maxPct) * 100}%`,
+                  height: '100%',
+                  borderRadius: 3,
+                  background: color,
+                }} />
               </div>
-            ))}
-          </div>
+              <span style={{
+                fontSize: 11, color: TEXT_MID,
+                width: 38, flexShrink: 0, textAlign: 'right',
+              }}>
+                {pct.toFixed(1)}%
+              </span>
+            </div>
+          ))}
         </div>
 
         {/* Footer */}
         <div style={{
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          marginTop: 16, paddingTop: 12,
+          marginTop: 14, paddingTop: 10,
           borderTop: `1px solid ${TEXT_DIM}`,
         }}>
-          <span style={{ fontSize: 12, color: TEXT_MID, letterSpacing: '0.08em' }}>
+          <span style={{ fontSize: 11, color: TEXT_MID, letterSpacing: '0.08em' }}>
             whisperscensus.com
           </span>
           {date && (
-            <span style={{ fontSize: 11, color: TEXT_DIM }}>Updated {date}</span>
+            <span style={{ fontSize: 10, color: TEXT_DIM }}>Updated {date}</span>
           )}
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { useRawBlob } from '@/hooks/useDemographics'
-import { ClassDonut } from '@/components/ClassDonut'
+import { ClassBars } from '@/components/ClassBars'
 import { SpecRankings } from '@/components/SpecRankings'
 import { MythicClassTemplate } from '@/components/share/MythicClassTemplate'
 import { shareImage } from '@/utils/shareImage'
@@ -105,7 +105,7 @@ export function MythicPageClient() {
           <h2 className="section-title">Class Distribution</h2>
           <ShareButton onClick={handleShareClass} loading={sharing} />
         </div>
-        <ClassDonut specs={specs} />
+        <ClassBars specs={specs} />
       </section>
 
       {/* Spec rankings */}
