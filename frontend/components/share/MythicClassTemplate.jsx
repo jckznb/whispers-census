@@ -71,7 +71,7 @@ export const MythicClassTemplate = forwardRef(function MythicClassTemplate(
     <div
       ref={ref}
       style={{
-        position: 'fixed', left: '-9999px', top: 0, zIndex: -1,
+        position: 'fixed', left: '-9999px', top: 0,
         width: 600, height: 315,
         background: BG,
         fontFamily: 'var(--font-inter), Inter, sans-serif',

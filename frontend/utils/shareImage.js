@@ -10,8 +10,9 @@ import { toPng } from 'html-to-image'
  */
 export async function shareImage(element, filename, title) {
   const dataUrl = await toPng(element, {
-    pixelRatio: 2,
-    cacheBust:  true,
+    pixelRatio:      2,
+    cacheBust:       true,
+    backgroundColor: '#0d0518',
   })
 
   const blob = await (await fetch(dataUrl)).blob()
