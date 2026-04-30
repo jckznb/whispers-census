@@ -1,11 +1,11 @@
 'use client'
 
-import { forwardRef } from 'react'
+import { forwardRef, useState, useEffect } from 'react'
 import { CLASS_COLORS } from '@/utils/constants'
 
 // Mirrors: ClassBars in MythicPageClient
 // Renders at 540×540 DOM px → captured at 1080×1080 (pixelRatio:2)
-// Uses inline SVG icon — no external image loading required by html-to-image.
+// Logo is pre-fetched as base64 on mount so html-to-image sees a data URL, not a path.
 
 const BG       = '#0d0518'
 const TEXT_HI  = '#e8deff'
@@ -13,16 +13,19 @@ const TEXT_MID = '#9b6dff'
 const TEXT_DIM = '#3d1a6e'
 const ACCENT   = '#9b4cc4'
 
-function EyeIcon() {
-  return (
-    <svg width="36" height="36" viewBox="0 0 36 36" style={{ flexShrink: 0 }}>
-      <circle cx="18" cy="18" r="17" fill="#1a0a30" />
-      <circle cx="18" cy="18" r="11" fill="#2d1155" />
-      <circle cx="18" cy="18" r="6"  fill={ACCENT} />
-      <circle cx="18" cy="18" r="3"  fill="#c084fc" />
-      <circle cx="20" cy="16" r="1.4" fill={TEXT_HI} style={{ opacity: 0.5 }} />
-    </svg>
-  )
+function useLogoDataUrl() {
+  const [src, setSrc] = useState('')
+  useEffect(() => {
+    fetch('/favicon-32x32.png')
+      .then(r => r.blob())
+      .then(blob => {
+        const reader = new FileReader()
+        reader.onload = e => setSrc(e.target.result)
+        reader.readAsDataURL(blob)
+      })
+      .catch(() => {})
+  }, [])
+  return src
 }
 
 function buildBars(specs) {
@@ -50,6 +53,7 @@ export const MythicClassTemplate = forwardRef(function MythicClassTemplate(
 ) {
   const { bars } = buildBars(specs)
   const maxPct = bars[0]?.pct ?? 1
+  const logoSrc = useLogoDataUrl()
 
   const date = updatedDate
     ? new Date(updatedDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
@@ -75,7 +79,10 @@ export const MythicClassTemplate = forwardRef(function MythicClassTemplate(
       >
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
-          <EyeIcon />
+          {logoSrc && (
+            <img src={logoSrc} width={36} height={36}
+              style={{ borderRadius: 4, flexShrink: 0 }} />
+          )}
           <div style={{ flex: 1 }}>
             <div style={{
               fontSize: 10, fontWeight: 600, letterSpacing: '0.14em',
