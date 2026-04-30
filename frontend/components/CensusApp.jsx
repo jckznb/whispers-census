@@ -112,13 +112,8 @@ export function CensusApp({ children }) {
               <LoadingOverlay />
             ) : data.length === 0 ? (
               <div className="card p-8 text-center text-void-500">
-                <p className="text-lg font-display mb-2">No data yet</p>
-                <p className="text-sm">
-                  Run the crawler first:{' '}
-                  <code className="bg-void-800 px-2 py-0.5 rounded text-void-300">
-                    python -m scripts.run_crawl --phase pvp --region us
-                  </code>
-                </p>
+                <p className="text-lg font-display mb-2">Data unavailable</p>
+                <p className="text-sm">This context hasn&apos;t been crawled yet. Check back soon.</p>
               </div>
             ) : (
               <>

@@ -20,17 +20,31 @@
 
 import { useState, useEffect } from 'react'
 
-const BLOB_URL = process.env.NEXT_PUBLIC_DEMOGRAPHICS_URL
+const BLOB_URL    = process.env.NEXT_PUBLIC_DEMOGRAPHICS_URL
+const VERSION_KEY = 'wc_blob_ver'
 
 let _cache    = null
 let _inflight = null
+
+function bustCacheIfStale(updated) {
+  try {
+    const stored = localStorage.getItem(VERSION_KEY)
+    if (stored && stored !== updated) _cache = null
+    localStorage.setItem(VERSION_KEY, updated)
+  } catch {}
+}
 
 async function getBlob() {
   if (_cache)    return _cache
   if (_inflight) return _inflight
   _inflight = fetch(BLOB_URL, { cache: 'no-cache' })
     .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() })
-    .then(data => { _cache = data; _inflight = null; return data })
+    .then(data => {
+      bustCacheIfStale(data.updated)
+      _cache = data
+      _inflight = null
+      return data
+    })
   return _inflight
 }
 

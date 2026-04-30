@@ -27,13 +27,13 @@ export const metadata = {
   title: 'Whispers Census — WoW Character Demographics',
   description:
     'See what races and classes real WoW players are choosing. Population data from US PvP leaderboards, Mythic+ runs, and 1.6M+ guild roster characters.',
-  metadataBase: new URL('https://whisperscensus.app'),
+  metadataBase: new URL('https://whisperscensus.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     type: 'website',
-    url: 'https://whisperscensus.app/',
+    url: 'https://whisperscensus.com/',
     title: 'Whispers Census — WoW Character Demographics',
     description:
       'See what races and classes real WoW players are choosing. Population data from US PvP leaderboards, Mythic+ runs, and 1.6M+ guild roster characters.',
